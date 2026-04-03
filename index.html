@@ -56,17 +56,13 @@
       width: 36px;
       height: 36px;
       border-radius: 9px;
-      background: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      overflow: hidden;
     }
 
-    .logo-mark span {
-      font-size: 18px;
-      font-weight: 500;
-      color: var(--bg);
-      letter-spacing: -1px;
+    .logo-mark img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .logo-name {
@@ -251,6 +247,7 @@
     .footer-logo-mark {
       width: 28px;
       height: 28px;
+      overflow: hidden;
       border-radius: 7px;
       background: var(--text);
       display: flex;
@@ -258,9 +255,10 @@
       justify-content: center;
     }
 
-    .footer-logo-mark span {
-      font-size: 14px;
-      font-weight: 500;
+    .footer-logo-mark img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       color: var(--bg);
     }
 
@@ -303,15 +301,15 @@
 
   <nav>
     <a class="nav-logo" href="#">
-      <div class="logo-mark"><span>N</span></div>
+      <div class="logo-mark"><img src="logo-icon.png" alt="Nubric"></div>
       <span class="logo-name">Nubric</span>
     </a>
     <a class="nav-contact" href="mailto:info@nubric.dev">info@nubric.dev</a>
   </nav>
 
   <section class="hero">
-    <h1>Simple tools for<br><em>the way you work.</em></h1>
-    <p>We build practical mobile apps for people who want to get things done. No fluff — just tools that solve real problems.</p>
+    <h1>Apps that work.<br><em>Apps that wonder.</em></h1>
+    <p>Nubric builds apps that work and apps that wonder. From tracking hours to sparking curiosity, we make tools for the way you actually live.</p>
     <div class="divider-line"></div>
   </section>
 
@@ -358,7 +356,7 @@
 
   <footer>
     <div class="footer-left">
-      <div class="footer-logo-mark"><span>N</span></div>
+      <div class="footer-logo-mark"><img src="logo-icon.png" alt="Nubric"></div>
       <span class="footer-text">Nubric LLC &nbsp;&middot;&nbsp; Phoenix, Arizona</span>
     </div>
     <div class="footer-right">
