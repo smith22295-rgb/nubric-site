@@ -54,17 +54,7 @@
       width: 36px;
       height: 36px;
       border-radius: 9px;
-      background: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .logo-mark span {
-      font-size: 18px;
-      font-weight: 500;
-      color: var(--bg);
-      letter-spacing: -1px;
+      overflow: hidden;
     }
 
     .logo-name {
@@ -178,16 +168,7 @@
       width: 28px;
       height: 28px;
       border-radius: 7px;
-      background: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .footer-logo-mark span {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--bg);
+      overflow: hidden;
     }
 
     .footer-text { font-size: 13px; color: var(--hint); }
@@ -219,7 +200,7 @@
 
   <nav>
     <a class="nav-logo" href="/">
-      <div class="logo-mark"><span>N</span></div>
+      <div class="logo-mark"><img src="/logo-icon.png" alt="Nubric" style="width:100%;height:100%;object-fit:cover;"></div>
       <span class="logo-name">Nubric</span>
     </a>
     <a class="back-link" href="/">&larr; Back to nubric.dev</a>
@@ -305,7 +286,7 @@
 
   <footer>
     <div class="footer-left">
-      <div class="footer-logo-mark"><span>N</span></div>
+      <div class="footer-logo-mark"><img src="/logo-icon.png" alt="Nubric" style="width:100%;height:100%;object-fit:cover;"></div>
       <span class="footer-text">Nubric LLC &nbsp;&middot;&nbsp; Phoenix, Arizona</span>
     </div>
     <div class="footer-right">
