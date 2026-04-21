@@ -153,8 +153,14 @@
       border-radius: 16px;
       background: var(--surface);
       margin-bottom: 1rem;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, transform 0.2s;
       min-height: 130px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    a.app-card:hover {
+      transform: translateY(-1px);
     }
 
     .app-card.featured {
@@ -336,7 +342,7 @@
   <section class="apps">
     <p class="section-label">Our apps</p>
 
-    <div class="app-card featured">
+    <a class="app-card featured" href="https://apps.apple.com/us/app/hourmark-1099-tracker/id6762023929" target="_blank" rel="noopener">
       <div class="app-icon icon-hourmark"></div>
       <div class="app-info">
         <div class="app-name">
@@ -345,7 +351,7 @@
         </div>
         <p class="app-desc">1099 contractor pay tracking. Log hours, set rates, and stay ready for tax season — built for independent workers who need to stay organized.</p>
       </div>
-    </div>
+    </a>
 
     <div class="app-card featured-green">
       <div class="app-icon icon-wwg">
