@@ -136,6 +136,42 @@
     }
     .prose a:hover { text-decoration: underline; }
 
+    .prose code {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    .vendor-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0 1.5rem;
+      font-size: 14px;
+    }
+
+    .vendor-table th,
+    .vendor-table td {
+      text-align: left;
+      padding: 0.75rem 0.85rem;
+      border-bottom: 0.5px solid var(--border);
+      color: var(--muted);
+      line-height: 1.55;
+      vertical-align: top;
+    }
+
+    .vendor-table th {
+      color: var(--text);
+      font-weight: 500;
+      font-size: 13px;
+      letter-spacing: 0.3px;
+      border-bottom: 0.5px solid rgba(255,255,255,0.18);
+    }
+
+    .vendor-table tbody tr:last-child td { border-bottom: none; }
+
     .highlight-box {
       background: var(--surface);
       border: 0.5px solid var(--border);
@@ -209,113 +245,96 @@
   <div class="page">
     <p class="page-label">Moto Trax</p>
     <h1>Privacy Policy</h1>
-    <p class="updated">Effective: May 3, 2026 &nbsp;&middot;&nbsp; Last updated: May 3, 2026</p>
+    <p class="updated">Effective: May 4, 2026 &nbsp;&middot;&nbsp; Last updated: May 4, 2026</p>
 
     <div class="highlight-box">
-      <p>Moto Trax is built by Nubric. This policy explains what we collect, how we use it, and the controls you have &mdash; in plain English. We do not sell your data.</p>
+      <p>Moto Trax is built by Nubric ("we," "our," "us"). This policy explains what we collect, how we use it, and the controls you have. We wrote it in plain English. If anything's unclear, email us at <a href="mailto:info@nubric.dev">info@nubric.dev</a>.</p>
     </div>
 
     <div class="prose">
 
-      <h2>1. Who This Policy Applies To</h2>
-      <p>Anyone who uses the Moto Trax app on iOS, Android, or the web (<a href="https://mototrax.app">mototrax.app</a>). You must be <strong>at least 13 years old</strong> to create a Moto Trax account. We do not knowingly collect personal data from children under 13.</p>
+      <h2>1. Who this policy applies to</h2>
+      <p>Anyone who uses the Moto Trax app on iOS, Android, or the web (<a href="https://mototrax.app">mototrax.app</a>).</p>
 
-      <h2>2. What We Collect</h2>
-
-      <p><strong>Account information you provide</strong></p>
+      <h2>2. We don't have user accounts</h2>
+      <p>Moto Trax v1 is an anonymous directory app. <strong>There is no sign-in, no user profile, no posting, no check-ins.</strong> We do not collect:</p>
       <ul>
-        <li>Display name, username, email address</li>
-        <li>Riding number, home state, riding level, race classes, bikes you ride</li>
-        <li>Track ownership claim documents you upload (LLC papers, OHV permits, AMA charter certificates, etc.)</li>
+        <li>Names, email addresses, phone numbers</li>
+        <li>Profile photos</li>
+        <li>Riding numbers, bikes, classes, or any rider info</li>
+        <li>Posts, comments, reviews, ratings &mdash; these features don't exist in v1</li>
+        <li>Account passwords or authentication credentials</li>
       </ul>
 
-      <p><strong>Authentication identifiers</strong></p>
-      <ul>
-        <li>If you sign in with <strong>Apple</strong> or <strong>Google</strong>, we receive the verified email address and a stable identifier from the provider. We do not see or store your password.</li>
-        <li>If you sign in with email + password, the password is hashed and stored by our authentication provider (Firebase Auth). We never see the plaintext.</li>
-      </ul>
+      <h2>3. What we do collect</h2>
 
-      <p><strong>Content you create</strong></p>
-      <p>Posts, comments, reviews, ratings, condition reports, session check-ins, follows, RSVPs, reactions, and reports you submit on tracks.</p>
-
-      <p><strong>Location data</strong></p>
+      <p><strong>Location data (only when you choose)</strong></p>
       <ul>
-        <li>When you tap "Use My Location" on the Map, your device shares your current GPS coordinates with the Moto Trax app <strong>only</strong>. The coordinates are used to center the map and (in the future) to show tracks near you. We do <strong>not</strong> transmit your location to Moto Trax servers and we do <strong>not</strong> retain it after you close the app, unless you explicitly choose to share it (for example, by checking in to a track).</li>
-        <li>Track check-ins you create do save the track's coordinates (not your live location) to your account.</li>
-      </ul>
-
-      <p><strong>Device + app data</strong></p>
-      <ul>
-        <li>App version, OS version, device model, crash logs, and high-level usage events. Used to debug crashes and improve the app.</li>
-        <li>We do <strong>not</strong> use third-party advertising trackers and we do <strong>not</strong> participate in Apple's IDFA tracking.</li>
+        <li>When you tap <strong>"Use My Location"</strong> on the Map, your device shares your current GPS coordinates with the Moto Trax app <strong>only</strong>. The coordinates are used to center the map and (optionally) sort tracks by distance.</li>
+        <li>Location data is <strong>never transmitted to Moto Trax servers</strong> and <strong>never retained</strong> after you close the app.</li>
+        <li>Background location is not requested. We use foreground-only permission.</li>
       </ul>
 
       <p><strong>Information from third parties</strong></p>
       <ul>
-        <li><strong>OpenStreetMap / CartoDB:</strong> the map tiles your device fetches when viewing the map. They see your IP address.</li>
+        <li><strong>OpenStreetMap / CartoDB:</strong> the map tiles your device fetches when viewing the map. They see your IP address, like any web request.</li>
         <li><strong>Nominatim (OpenStreetMap):</strong> when you type a city or ZIP into the search box, that text + your IP is sent to OpenStreetMap's geocoder. We do not store the search term.</li>
       </ul>
 
-      <h2>3. How We Use It</h2>
+      <p><strong>Device + app data</strong></p>
       <ul>
-        <li>Run the app: show you tracks, deliver your follows' updates, render your profile, accept your posts.</li>
-        <li>Verify track ownership claims (manual review of documents you submit).</li>
-        <li>Fix bugs (crash logs).</li>
-        <li>Respond when you contact support.</li>
-        <li>Enforce our Community Guidelines (e.g., investigate reports of objectionable content).</li>
-        <li>Send you transactional notifications (e.g., a track owner you follow posts an update &mdash; only if you've enabled push).</li>
-      </ul>
-      <p>We do <strong>not</strong> sell your data to anyone. Period.</p>
-
-      <h2>4. Who Sees Your Content</h2>
-      <ul>
-        <li><strong>Your profile</strong> is public by default &mdash; anyone using Moto Trax can see your handle, bikes, classes, and tracks you ride. Make it private in <strong>Settings &rarr; Privacy &rarr; Public Profile</strong>.</li>
-        <li><strong>Posts, comments, reviews</strong> you submit on a track are public to all Moto Trax users.</li>
-        <li><strong>Ride log / sessions</strong> default to "visible to your followers." Hide them entirely under <strong>Settings &rarr; Privacy &rarr; Ride Log Visible to Followers</strong>.</li>
-        <li><strong>Precise location of where you check in</strong> is hidden by default; tracks show approximate location unless you flip <strong>Settings &rarr; Privacy &rarr; Show Precise Location</strong>.</li>
+        <li>Crash logs (anonymized &mdash; Apple/Google standard reporting). No personal identifiers.</li>
+        <li>We do <strong>not</strong> use third-party advertising trackers and we do <strong>not</strong> participate in Apple's IDFA tracking.</li>
       </ul>
 
-      <h2>5. Service Providers We Use</h2>
-      <p>We rely on a small set of vendors to run the app. Each one only sees the data they need.</p>
+      <h2>4. How we use it</h2>
+      <p>The only data we receive is anonymous crash reports and feedback you choose to send us via the in-app form.</p>
       <ul>
-        <li><strong>Firebase (Google)</strong> &mdash; Authentication, database, crash reports, basic analytics. Hosted in Google's US data centers. See <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a>.</li>
-        <li><strong>Apple Sign In</strong> &mdash; Authentication for "Sign in with Apple." See <a href="https://www.apple.com/legal/privacy/" target="_blank">Apple Privacy Policy</a>.</li>
-        <li><strong>OpenStreetMap / CartoDB</strong> &mdash; Map tiles and geocoding when you search. Hosted by the OSM Foundation. See <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy" target="_blank">OSM Privacy Policy</a>.</li>
+        <li><strong>Crash reports:</strong> to fix bugs.</li>
+        <li><strong>Feedback (when you write to us):</strong> to read your message and reply if you've included a contact email.</li>
       </ul>
-      <p>We do not share data with anyone else for marketing or advertising.</p>
+      <p>We do <strong>not</strong> sell any data to anyone. Period.</p>
 
-      <h2>6. Your Rights &amp; Controls</h2>
-      <p>You can:</p>
+      <h2>5. Track data</h2>
+      <p>The 285+ track listings in the app come from public sources:</p>
       <ul>
-        <li><strong>Edit any field</strong> on your profile from <strong>Settings &rarr; Account</strong>.</li>
-        <li><strong>Toggle visibility</strong> of your profile, ride log, and precise location under <strong>Settings &rarr; Privacy</strong>.</li>
-        <li><strong>Export everything we have on you</strong> &mdash; sessions, posts, follows, reviews &mdash; as a CSV file. <strong>Settings &rarr; Privacy &amp; Data &rarr; Export My Data</strong>.</li>
-        <li><strong>Delete your account</strong> in-app. <strong>Settings &rarr; Privacy &amp; Data &rarr; Delete Account</strong> and confirm. Deletion removes your profile, posts, comments, reviews, sessions, and follows. Track ownership claims are revoked. We confirm deletion by email within 7 days.</li>
-        <li><strong>Opt out of analytics</strong> via <strong>Settings &rarr; Privacy &rarr; Usage Analytics</strong>.</li>
+        <li><strong>OpenStreetMap</strong> (<code>sport=motocross</code> features, ODbL license)</li>
+        <li><strong>American Motorcyclist Association</strong> (chartered organizations and event search results)</li>
       </ul>
-      <p>If you live in California (CCPA), the EU/UK (GDPR), or another jurisdiction with privacy rights, you have the same rights here regardless: access, deletion, correction, portability. Email <a href="mailto:info@nubric.dev">info@nubric.dev</a> if you'd rather make a request that way.</p>
+      <p>Editorial content in the News tab is written by Nubric.</p>
 
-      <h2>7. Retention</h2>
+      <h2>6. Service providers we use</h2>
+      <table class="vendor-table">
+        <thead>
+          <tr><th>Vendor</th><th>What they handle</th><th>Where data lives</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Apple App Store</td><td>App distribution + crash reports on iOS</td><td>Apple</td></tr>
+          <tr><td>Google Play</td><td>App distribution + crash reports on Android</td><td>Google</td></tr>
+          <tr><td>Expo (EAS)</td><td>Build + over-the-air JavaScript updates</td><td>Expo / Cloudflare</td></tr>
+          <tr><td>OpenStreetMap / CartoDB</td><td>Map tiles + geocoding when you search</td><td>OSM Foundation</td></tr>
+        </tbody>
+      </table>
+      <p>We do not share data with anyone for marketing or advertising.</p>
+
+      <h2>7. Your rights &amp; controls</h2>
+      <p>Because we don't store user data, there's nothing to export, delete, or correct on our servers. Closing the app or uninstalling it leaves no trace on our side.</p>
+      <p><strong>On your device,</strong> Moto Trax stores a small amount of local preference data (your units choice, cached map tiles). To clear it: <strong>Settings &rarr; Your Data &rarr; Delete Local Data</strong>. This is also done automatically when you uninstall the app.</p>
+      <p>If you want us to delete crash logs your device sent us (within the 14-month retention window), email <a href="mailto:info@nubric.dev">info@nubric.dev</a> with the device model and approximate date range.</p>
+      <p>If you live in California (CCPA), the EU/UK (GDPR), or another jurisdiction with privacy rights, the answer is the same: we have nothing on you to access, delete, or correct.</p>
+
+      <h2>8. Children</h2>
+      <p>Moto Trax is rated 4+ and may be used by anyone, including children under 13, since we collect no personal data and contain no user-generated content.</p>
+
+      <h2>9. Changes to this policy</h2>
+      <p>If a future version of Moto Trax adds user accounts, posts, comments, or any other feature that collects personal data, we will update this policy and notify users in-app <em>before</em> enabling those features.</p>
+
+      <h2>10. Contact</h2>
+      <p>Questions, complaints, requests:</p>
       <ul>
-        <li>Active account data is kept while the account exists.</li>
-        <li>Deleted accounts are removed from our active database within 30 days of the deletion request. Backups are purged within 90 days.</li>
-        <li>Crash logs and analytics are kept for 14 months, then deleted.</li>
-      </ul>
-
-      <h2>8. Security</h2>
-      <p>We use Firebase's encryption at rest and TLS in transit. Authentication tokens are stored in your device's secure storage (Keychain on iOS, Keystore on Android). No system is perfect &mdash; if we ever discover a breach affecting your data, we'll notify you within 72 hours of confirming the issue.</p>
-
-      <h2>9. Children</h2>
-      <p>Moto Trax is not directed at children under 13. If you are a parent and believe your child has created an account, email <a href="mailto:info@nubric.dev">info@nubric.dev</a> and we'll delete it.</p>
-
-      <h2>10. Changes to This Policy</h2>
-      <p>We'll update this page when we change anything material. The "Last updated" date at the top will change. If the change is significant, we'll also send an in-app notification.</p>
-
-      <h2>11. Contact</h2>
-      <ul>
+        <li><strong>Nubric</strong></li>
         <li>Email: <a href="mailto:info@nubric.dev">info@nubric.dev</a></li>
         <li>Website: <a href="https://nubric.dev">nubric.dev</a></li>
-        <li>Nubric LLC, Phoenix, Arizona</li>
       </ul>
 
     </div>
