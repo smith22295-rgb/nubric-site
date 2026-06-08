@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy &mdash; Sixty4 Racing by Nubric</title>
+  <link rel="icon" type="image/png" href="/logo-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0e0e0f;
+      --surface: #161618;
+      --border: rgba(255,255,255,0.08);
+      --text: #f0f0ee;
+      --muted: #888884;
+      --hint: #444440;
+      --orange: #e85d00;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2.5rem;
+      border-bottom: 0.5px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(14,14,15,0.92);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-mark { width: 36px; height: 36px; border-radius: 9px; overflow: hidden; }
+    .logo-name { font-size: 16px; font-weight: 500; color: var(--text); letter-spacing: 0.5px; }
+    .back-link { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .back-link:hover { color: var(--text); }
+    .page { max-width: 680px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+    .page-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 500;
+      letter-spacing: -1px;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      line-height: 1.15;
+    }
+    .updated { font-size: 13px; color: var(--hint); margin-bottom: 3rem; }
+    .prose h2 {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text);
+      margin-top: 2.5rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .prose p { font-size: 15px; line-height: 1.75; color: var(--muted); margin-bottom: 1rem; }
+    .prose ul, .prose ol { margin: 0.5rem 0 1rem 1.5rem; }
+    .prose ul li, .prose ol li { font-size: 15px; line-height: 1.75; color: var(--muted); margin-bottom: 0.35rem; }
+    .prose a { color: var(--orange); text-decoration: none; }
+    .prose a:hover { text-decoration: underline; }
+    .prose code {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+    .vendor-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 14px; }
+    .vendor-table th, .vendor-table td {
+      text-align: left;
+      padding: 0.75rem 0.85rem;
+      border-bottom: 0.5px solid var(--border);
+      color: var(--muted);
+      line-height: 1.55;
+      vertical-align: top;
+    }
+    .vendor-table th {
+      color: var(--text);
+      font-weight: 500;
+      font-size: 13px;
+      letter-spacing: 0.3px;
+      border-bottom: 0.5px solid rgba(255,255,255,0.18);
+    }
+    .vendor-table tbody tr:last-child td { border-bottom: none; }
+    .highlight-box {
+      background: var(--surface);
+      border: 0.5px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin: 2rem 0;
+    }
+    .highlight-box p { margin-bottom: 0; font-size: 14px; }
+    footer {
+      border-top: 0.5px solid var(--border);
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-left { display: flex; align-items: center; gap: 10px; }
+    .footer-logo-mark { width: 28px; height: 28px; border-radius: 7px; overflow: hidden; }
+    .footer-text { font-size: 13px; color: var(--hint); }
+    .footer-right { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; font-size: 13px; }
+    .footer-right a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-right a:hover { color: var(--text); }
+    .footer-dot { color: var(--hint); }
+    @media (max-width: 600px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .page { padding: 3rem 1.5rem 5rem; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="/">
+      <div class="logo-mark"><img src="/logo-icon.png" alt="Nubric" style="width:100%;height:100%;object-fit:cover;"></div>
+      <span class="logo-name">Nubric</span>
+    </a>
+    <a class="back-link" href="/">&larr; Back to nubric.dev</a>
+  </nav>
+
+  <div class="page">
+    <p class="page-label">Sixty4 Racing</p>
+    <h1>Privacy Policy</h1>
+    <p class="updated">Effective: June 7, 2026 &nbsp;&middot;&nbsp; Last updated: June 7, 2026</p>
+
+    <div class="highlight-box">
+      <p>Sixty4 Racing is built by Nubric ("we," "our," "us"). Short version: the app has <strong>no accounts and keeps everything on your device</strong> &mdash; we don't run a server that stores your data. This policy spells out the details in plain English. Questions? Email <a href="mailto:info@nubric.dev">info@nubric.dev</a>.</p>
+    </div>
+
+    <div class="prose">
+
+      <h2>1. Who this policy applies to</h2>
+      <p>Anyone who uses the Sixty4 Racing app on iOS (and Android, when released). Sixty4 Racing is a companion app for the Sixty4 Racing speed-trap timer, which clocks 1:64 scale diecast cars. The product site is <a href="https://sixty4racing.com">sixty4racing.com</a>.</p>
+
+      <h2>2. We don't have user accounts</h2>
+      <p>Sixty4 Racing has <strong>no sign-in, no user profile, no posting, and no cloud sync.</strong> We do not collect:</p>
+      <ul>
+        <li>Names, email addresses, or phone numbers</li>
+        <li>Account passwords or authentication credentials</li>
+        <li>Location data (see Bluetooth, below)</li>
+        <li>Contacts, calendars, or advertising identifiers</li>
+      </ul>
+
+      <h2>3. What the app stores &mdash; on your device only</h2>
+      <p>Everything you create in Sixty4 Racing lives in a local database on your phone and <strong>never leaves your device</strong>:</p>
+      <ul>
+        <li>Your <strong>garage</strong> &mdash; the cars you add, their run history, lap and elapsed-time records, and top speeds</li>
+        <li>Your <strong>paired devices</strong> &mdash; the names and roles you assign to your Sixty4 timing units</li>
+        <li>Your <strong>preferences</strong> &mdash; units (MPH/KPH), scale vs. real speed, and similar settings</li>
+        <li>Any <strong>car photos</strong> you add (see below)</li>
+      </ul>
+      <p>We have no servers that receive, store, or back up this data. You can erase all of it at any time in <strong>Settings &rarr; Your data &rarr; Delete local data</strong>, or by uninstalling the app.</p>
+
+      <h2>4. Bluetooth</h2>
+      <p>The app uses Bluetooth Low Energy <strong>only</strong> to connect to your nearby Sixty4 timing hardware and receive run results. We do not collect or transmit your location. On Android, Bluetooth scanning is configured as "never for location," and the app does not request location permission.</p>
+
+      <h2>5. Photos</h2>
+      <p>If you add a photo to a car, the app opens your system photo picker so you choose one image. That photo is stored locally as part of your garage and is <strong>never uploaded</strong> to us or anyone else. The app does not request full photo-library access &mdash; only the single image you pick.</p>
+
+      <h2>6. What leaves your device</h2>
+      <p>The app makes no network calls to carry your personal data. The only outbound connections are standard platform services:</p>
+      <ul>
+        <li><strong>Expo (EAS Update):</strong> the app checks Expo's servers for over-the-air JavaScript updates and downloads them. Like any download, this exposes your IP address; no personal data is sent.</li>
+        <li><strong>Apple / Google:</strong> app distribution and anonymized, standard crash reporting. No personal identifiers.</li>
+      </ul>
+      <p>We use <strong>no</strong> third-party advertising trackers, <strong>no</strong> analytics SDKs, and we do <strong>not</strong> participate in Apple's IDFA tracking. We do not sell data to anyone. Period.</p>
+
+      <h2>7. The car catalog</h2>
+      <p>The searchable make/model list is <strong>bundled inside the app</strong> &mdash; it is not fetched from the network and involves no tracking. It is built from <strong>Wikidata</strong> (CC0 public-domain data) plus a curated list of brand-original casting names. Those casting names (e.g. Hot Wheels, Matchbox, Johnny Lightning) are trademarks of their respective owners, shown only to help you identify a car; Nubric and Sixty4 Racing are not affiliated with or endorsed by those companies.</p>
+
+      <h2>8. Service providers we use</h2>
+      <table class="vendor-table">
+        <thead>
+          <tr><th>Vendor</th><th>What they handle</th><th>Where data lives</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Apple App Store</td><td>App distribution + crash reports on iOS</td><td>Apple</td></tr>
+          <tr><td>Google Play</td><td>App distribution + crash reports on Android</td><td>Google</td></tr>
+          <tr><td>Expo (EAS)</td><td>Build + over-the-air JavaScript updates</td><td>Expo / Cloudflare</td></tr>
+        </tbody>
+      </table>
+      <p>We do not share data with anyone for marketing or advertising.</p>
+
+      <h2>9. Your rights &amp; controls</h2>
+      <p>Because we don't store user data on any server, there is nothing on our side to export, delete, or correct. Within the app:</p>
+      <ul>
+        <li><strong>Delete everything:</strong> Settings &rarr; Your data &rarr; <strong>Delete local data</strong>.</li>
+        <li><strong>Uninstall</strong> the app to remove all local data automatically.</li>
+        <li><strong>Revoke Bluetooth or Photos permission</strong> any time in your device's system settings.</li>
+      </ul>
+      <p>If you live in California (CCPA), the EU/UK (GDPR), or another jurisdiction with privacy rights, the answer is the same: we hold nothing about you to access, delete, or correct.</p>
+
+      <h2>10. Children</h2>
+      <p>Sixty4 Racing is rated 4+ and may be used by anyone, including children under 13, since we collect no personal data and the app contains no user-generated content or messaging.</p>
+
+      <h2>11. Changes to this policy</h2>
+      <p>If a future version of Sixty4 Racing adds accounts, cloud sync, leaderboards, or any feature that collects personal data, we will update this policy and notify users in-app <em>before</em> enabling those features. The "Last updated" date will change.</p>
+
+      <h2>12. Contact</h2>
+      <ul>
+        <li><strong>Nubric</strong></li>
+        <li>Email: <a href="mailto:info@nubric.dev">info@nubric.dev</a></li>
+        <li>Website: <a href="https://nubric.dev">nubric.dev</a></li>
+      </ul>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-left">
+      <div class="footer-logo-mark"><img src="/logo-icon.png" alt="Nubric" style="width:100%;height:100%;object-fit:cover;"></div>
+      <span class="footer-text">Nubric LLC &nbsp;&middot;&nbsp; Phoenix, Arizona</span>
+    </div>
+    <div class="footer-right">
+      <a href="/sixty4racing/privacy">Privacy Policy</a>
+      <span class="footer-dot">&middot;</span>
+      <a href="/sixty4racing/terms">Terms of Service</a>
+      <span class="footer-dot">&middot;</span>
+      <a href="mailto:info@nubric.dev">info@nubric.dev</a>
+    </div>
+  </footer>
+
+</body>
+</html>
