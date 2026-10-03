@@ -56,7 +56,7 @@
       document.getElementById('builder-total').textContent = money(unit * quantity);
       document.getElementById('builder-unit').textContent = `${money(unit)} each · ${discount ? Math.round(discount * 100) + '% quantity discount' : 'standard quantity pricing'}`;
       const body = `I'm interested in a product builder for my business.\n\nExample I tried:\nText: ${text}\nMaterial: ${material.name}\nDimensions: ${width} × ${height} in\nQuantity: ${quantity}\n\nMy products and pricing rules:\n\nBusiness name:\nPreferred timing:\n`;
-      document.getElementById('builder-inquiry').setAttribute('href', 'mailto:info@nubric.dev?subject=Custom%20product%20builder%20inquiry&body=' + encodeURIComponent(body));
+      document.getElementById('builder-inquiry').setAttribute('href', '/start-a-project?service=custom&feature=Product%20builder');
     }
     builder.querySelectorAll('input,select').forEach(control => { control.disabled = false; control.addEventListener('input',update); control.addEventListener('change',update); });
     update();
@@ -97,31 +97,63 @@
     const service = field('service');
     const preset = new URLSearchParams(window.location.search).get('service');
     if ([...service.options].some(o => o.value === preset)) service.value = preset;
-    document.getElementById('prepare-brief').disabled = false;
+    const feature = new URLSearchParams(window.location.search).get('feature');
+    const demoNames = ['Before-and-after slider','Interactive lighting and depth','Animated content reveal','Content website with advertising','Product builder'];
+    if (demoNames.includes(feature)) field('notes').value = `I liked the ${feature.toLowerCase()} demo. I would like to discuss something similar for my website.\n\nMy idea:\n`;
+    const send = document.getElementById('send-brief');
+    const status = document.getElementById('brief-status');
+    const describeService = () => { field('service-description').value = [...service.options].find(o => o.value === service.value)?.textContent || 'Not sure yet'; };
+    describeService(); service.addEventListener('change', describeService);
     brief.addEventListener('submit', e => {
-      e.preventDefault();
-      const selected = [...service.options].find(o => o.value === service.value)?.textContent || 'Not sure yet';
-      const body = `Hello Nubric,\n\nBusiness: ${field('business').value.trim() || 'To discuss'}\nInterested in: ${selected}\n\nMy ideas:\n${field('notes').value.trim() || 'I would like to talk through a project.'}\n\nBudget or timing:\n${field('timing').value.trim() || 'To discuss'}\n`;
-      field('output').value = body;
-      const mail = field('email');
-      const href = 'mailto:info@nubric.dev?subject=' + encodeURIComponent('Project inquiry: '+ selected) + '&body=' + encodeURIComponent(body);
-      // Long drafts are copied into webmail; keep mailto URLs within practical limits.
-      mail.setAttribute('href', href.length <= 1900 ? href : 'mailto:info@nubric.dev?subject=Project%20inquiry');
-      mail.textContent = href.length <= 1900 ? 'Open email draft' : 'Open email (paste your draft)';
-      document.getElementById('copy-status').textContent = href.length <= 1900 ? '' : 'This is a longer draft. Copy the text below into your email app.';
-      field('result').hidden = false; field('output').focus();
-      field('output').setSelectionRange?.(0, 0);
-      field('output').scrollTop = 0;
+      if (field('website').value) { e.preventDefault(); return; }
+      if (send.disabled) { e.preventDefault(); return; }
+      if (typeof brief.checkValidity === 'function' && !brief.checkValidity()) { e.preventDefault(); brief.reportValidity(); return; }
+      describeService(); send.disabled = true; send.textContent = 'Opening secure send step…';
+      status.textContent = 'Complete any spam check to send your inquiry. If this step does not open, you can email info@nubric.dev directly.';
+      // The provider handles validation and redirects only after the send flow.
+      // Keep the native POST: it works without JavaScript and retains reCAPTCHA.
     });
-    document.getElementById('copy-brief').addEventListener('click', async () => {
-      const status = document.getElementById('copy-status');
-      try { await navigator.clipboard.writeText(field('output').value); status.textContent = 'Draft copied. Paste it into an email to info@nubric.dev.'; }
-      catch { field('output').focus(); field('output').select(); status.textContent = 'Select and copy the draft text, then paste it into your email app.'; }
+    window.addEventListener('pageshow', () => { send.disabled = false; send.textContent = 'Send my inquiry'; status.textContent = ''; });
+  }
+  document.querySelectorAll('[data-compare]').forEach(demo => {
+    const range = demo.querySelector('input[type=range]'), output = demo.querySelector('output');
+    const update = () => { const value = Math.max(0,Math.min(100,Number(range.value))); demo.style.setProperty('--reveal',value+'%'); output.textContent=value+'%'; };
+    range.disabled=false; range.addEventListener('input',update); update();
+  });
+  const lightStage = document.getElementById('light-stage');
+  const motionStage = document.getElementById('motion-stage');
+  if (lightStage && motionStage) {
+    const light = document.getElementById('light-position'), angle = document.getElementById('card-angle');
+    const reset = document.getElementById('reset-light'), play = document.getElementById('play-motion'), pause = document.getElementById('pause-motion');
+    const reduce = document.getElementById('reduce-effects'), status = document.getElementById('motion-status');
+    const preference = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+    reduce.checked = Boolean(preference?.matches);
+    const reduced = () => Boolean(preference?.matches || reduce.checked);
+    const finish = () => { motionStage.classList.remove('playing','paused'); pause.disabled=true; pause.textContent='Pause'; play.textContent='Replay animation'; };
+    const applyPreference = () => { document.body.classList.toggle('effects-reduced',reduced()); if (reduced()) { finish(); status.textContent='Reduced motion is on. The complete design stays visible.'; } };
+    [light,angle,reset,play,reduce].forEach(control=>{control.disabled=false;});
+    const updateLight = () => { lightStage.style.setProperty('--light-x',light.value+'%'); lightStage.style.setProperty('--light-y','40%'); lightStage.style.setProperty('--tilt-y',angle.value+'deg'); lightStage.style.setProperty('--tilt-x','0deg'); };
+    light.addEventListener('input',updateLight); angle.addEventListener('input',updateLight);
+    lightStage.addEventListener('pointermove',event=>{
+      if (event.pointerType==='touch' || reduced()) return;
+      const r=lightStage.getBoundingClientRect(),x=Math.max(0,Math.min(1,(event.clientX-r.left)/r.width)),y=Math.max(0,Math.min(1,(event.clientY-r.top)/r.height));
+      lightStage.style.setProperty('--light-x',(x*100)+'%');lightStage.style.setProperty('--light-y',(y*100)+'%');lightStage.style.setProperty('--tilt-y',((x-.5)*18)+'deg');lightStage.style.setProperty('--tilt-x',((.5-y)*12)+'deg');
     });
+    lightStage.addEventListener('pointerleave',updateLight);
+    reset.addEventListener('click',()=>{light.value='50';angle.value='0';updateLight();});
+    reduce.addEventListener('change',applyPreference);preference?.addEventListener('change',applyPreference);
+    play.addEventListener('click',()=>{
+      finish();
+      if(reduced()){status.textContent='Reduced motion is on. The complete design stays visible.';return;}
+      void motionStage.offsetWidth;motionStage.classList.add('playing');pause.disabled=false;status.textContent='Playing the content reveal.';
+    });
+    pause.addEventListener('click',()=>{const paused=motionStage.classList.toggle('paused');pause.textContent=paused?'Resume':'Pause';status.textContent=paused?'Animation paused.':'Playing the content reveal.';});
+    motionStage.addEventListener('animationend',event=>{if(event.target.classList.contains('motion-cta')){finish();status.textContent='Preview complete. Play it again whenever you like.';}});
+    updateLight();applyPreference();
   }
   // Keep earlier shared homepage anchors useful after the move to dedicated pages.
   if (window.location.pathname === '/') {
-    const oldRoutes = {'#work':'/work/','#websites':'/websites','#shops':'/online-stores','#launch':'/branding','#logo':'/branding','#custom-tools':'/custom-solutions','#try-builder':'/custom-solutions#try-builder','#process':'/process','#care':'/care','#contact':'/contact','#apps':'/apps','#faq':'/process'};
+    const oldRoutes = {'#work':'/work/','#websites':'/websites','#shops':'/online-stores','#launch':'/business-launch','#logo':'/branding','#custom-tools':'/custom-solutions','#try-builder':'/custom-solutions#try-builder','#process':'/process','#care':'/care','#contact':'/contact','#apps':'/apps','#faq':'/process'};
     if (oldRoutes[window.location.hash]) window.location.replace(oldRoutes[window.location.hash]);
   }
 })();
