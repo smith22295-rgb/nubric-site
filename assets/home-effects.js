@@ -89,6 +89,8 @@
       ['pointerup','pointercancel','lostpointercapture'].forEach(type => stage.addEventListener(type, () => { dragging = false; }));
       range.addEventListener('input', () => { update(); discover(); });
       range.addEventListener('focus', discover);
+      // Browsers restore range values after scripts run when navigating back.
+      window.addEventListener('pageshow', update);
       update(); range.disabled = false;
     }
 
