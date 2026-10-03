@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://nubric.dev/</loc></url>
+  <url><loc>https://nubric.dev/websites</loc></url>
+  <url><loc>https://nubric.dev/online-stores</loc></url>
+  <url><loc>https://nubric.dev/branding</loc></url>
+  <url><loc>https://nubric.dev/process</loc></url>
+  <url><loc>https://nubric.dev/care</loc></url>
+  <url><loc>https://nubric.dev/custom-solutions</loc></url>
+  <url><loc>https://nubric.dev/work/</loc></url>
+  <url><loc>https://nubric.dev/work/file2forge</loc></url>
+  <url><loc>https://nubric.dev/work/axiom-tags</loc></url>
+  <url><loc>https://nubric.dev/work/yonder-maps</loc></url>
+  <url><loc>https://nubric.dev/work/engravingaz</loc></url>
+  <url><loc>https://nubric.dev/work/harmony-home-services</loc></url>
+  <url><loc>https://nubric.dev/contact</loc></url>
+  <url><loc>https://nubric.dev/apps</loc></url>
   <url><loc>https://nubric.dev/privacy</loc></url>
   <url><loc>https://nubric.dev/terms</loc></url>
   <url><loc>https://nubric.dev/hourmark/privacy</loc></url>
@@ -15,9 +29,4 @@
   <url><loc>https://nubric.dev/sixty4racing/privacy</loc></url>
   <url><loc>https://nubric.dev/sixty4racing/terms</loc></url>
   <url><loc>https://nubric.dev/sixty4racing/delete-account</loc></url>
-  <url><loc>https://nubric.dev/work/file2forge</loc></url>
-  <url><loc>https://nubric.dev/work/axiom-tags</loc></url>
-  <url><loc>https://nubric.dev/work/yonder-maps</loc></url>
-  <url><loc>https://nubric.dev/work/engravingaz</loc></url>
-  <url><loc>https://nubric.dev/work/harmony-home-services</loc></url>
 </urlset>

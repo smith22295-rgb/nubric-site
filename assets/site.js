@@ -1,12 +1,5 @@
 (() => {
   'use strict';
-  const menu = document.querySelector('.mobile-menu');
-  menu?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { menu.open = false; }));
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && menu?.open) { menu.open = false; menu.querySelector('summary').focus(); }
-  });
-  document.addEventListener('click', event => { if (menu?.open && !menu.contains(event.target)) menu.open = false; });
-
   function setupDialog(dialog, closeSelector) {
     if (!dialog || typeof dialog.showModal !== 'function') return null;
     let opener;
@@ -29,27 +22,6 @@
     document.getElementById('dialog-caption').textContent = link.dataset.caption;
     showImage(link);
   }));
-
-  const tabs = document.querySelector('.project-tabs');
-  if (tabs) {
-    const buttons = [...tabs.querySelectorAll('button')];
-    const panels = [...document.querySelectorAll('[data-project-panel]')];
-    function select(index, focus = false) {
-      buttons.forEach((b,i) => { b.setAttribute('aria-selected',String(i === index)); b.tabIndex = i === index ? 0 : -1; panels[i].hidden = i !== index; });
-      if (focus) buttons[index].focus();
-    }
-    tabs.setAttribute('role','tablist');
-    buttons.forEach((button,index) => {
-      button.setAttribute('role','tab'); button.setAttribute('aria-controls',panels[index].id);
-      panels[index].setAttribute('role','tabpanel'); panels[index].setAttribute('aria-labelledby',button.id);
-      button.addEventListener('click',() => select(index));
-      button.addEventListener('keydown',event => {
-        const targets = {ArrowRight:(index + 1) % buttons.length, ArrowLeft:(index + buttons.length - 1) % buttons.length, Home:0, End:buttons.length - 1};
-        if (event.key in targets) { event.preventDefault(); select(targets[event.key],true); }
-      });
-    });
-    document.querySelector('.work-grid').classList.add('portfolio-enhanced'); select(0); tabs.hidden = false;
-  }
 
   const builder = document.getElementById('builder-controls');
   if (builder) {
@@ -84,58 +56,70 @@
       document.getElementById('builder-total').textContent = money(unit * quantity);
       document.getElementById('builder-unit').textContent = `${money(unit)} each · ${discount ? Math.round(discount * 100) + '% quantity discount' : 'standard quantity pricing'}`;
       const body = `I'm interested in a product builder for my business.\n\nExample I tried:\nText: ${text}\nMaterial: ${material.name}\nDimensions: ${width} × ${height} in\nQuantity: ${quantity}\n\nMy products and pricing rules:\n\nBusiness name:\nPreferred timing:\n`;
-      document.getElementById('builder-inquiry').href = 'mailto:info@nubric.dev?subject=Custom%20product%20builder%20inquiry&body=' + encodeURIComponent(body);
+      document.getElementById('builder-inquiry').setAttribute('href', 'mailto:info@nubric.dev?subject=Custom%20product%20builder%20inquiry&body=' + encodeURIComponent(body));
     }
     builder.querySelectorAll('input,select').forEach(control => { control.disabled = false; control.addEventListener('input',update); control.addEventListener('change',update); });
     update();
   }
 
-  const guide = document.getElementById('project-guide');
-  const showGuide = setupDialog(guide,'[data-close-guide]');
-  if (showGuide) {
-    const conversation = document.getElementById('guide-conversation'), choices = document.getElementById('guide-choices'), result = document.getElementById('guide-result');
-    let answers = [];
-    function message(text,user = false) {
-      const p = document.createElement('p'); p.className = 'guide-message' + (user ? ' user-message' : ''); p.textContent = text; conversation.append(p);
-    }
-    function question(text,options,focus = true) {
-      message(text); choices.replaceChildren();
-      options.forEach(([label,action]) => {
-        const b = document.createElement('button'); b.type = 'button'; b.textContent = label;
-        b.addEventListener('click',() => { answers.push(label); message(label,true); action(); }); choices.append(b);
+  // Native details menus remain usable without JavaScript.
+  const menus = [...document.querySelectorAll('.mobile-menu,.services-menu')];
+  menus.forEach(menu => {
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { menu.open = false; }));
+    menu.addEventListener('toggle', () => { if (menu.open) menus.filter(m => m !== menu).forEach(m => { m.open = false; }); });
+  });
+  document.addEventListener('click', e => menus.forEach(m => { if (m.open && !m.contains(e.target)) m.open = false; }));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') menus.forEach(m => { if (m.open) { m.open = false; m.querySelector('summary').focus(); } }); });
+
+  const switcher = document.querySelector('.project-switcher');
+  if (switcher) {
+    const buttons = [...switcher.querySelectorAll('button')];
+    const panels = [...document.querySelectorAll('[data-hero-panel]')];
+    const select = (index, focus = false) => {
+      buttons.forEach((b, i) => { b.setAttribute('aria-selected', String(i === index)); b.tabIndex = i === index ? 0 : -1; panels[i].hidden = i !== index; });
+      if (focus) buttons[index].focus();
+    };
+    switcher.setAttribute('role', 'tablist');
+    buttons.forEach((b,i) => {
+      b.setAttribute('role', 'tab'); panels[i].setAttribute('role', 'tabpanel'); panels[i].setAttribute('aria-labelledby', b.id);
+      b.addEventListener('click', () => select(i));
+      b.addEventListener('keydown', e => {
+        const keys = {ArrowRight:(i+1)%buttons.length,ArrowLeft:(i+buttons.length-1)%buttons.length,Home:0,End:buttons.length-1};
+        if (e.key in keys) { e.preventDefault(); select(keys[e.key],true); }
       });
-      if (focus) choices.querySelector('button')?.focus({preventScroll:true});
-    }
-    function recommend(text,name) {
-      choices.replaceChildren(); message(text); message('This is a starting point. We confirm the content, scope, timing, and any provider costs before work begins.'); result.hidden = false;
-      const body = `Business name:\nCurrent website:\n\nProject guide answers:\n${answers.join('\n')}\n\nStarting point: ${name}\n\nExtra features or details:\nPreferred timing:\n`;
-      const email = document.getElementById('guide-email');
-      email.href = 'mailto:info@nubric.dev?subject=' + encodeURIComponent(name + ' inquiry') + '&body=' + encodeURIComponent(body); email.focus({preventScroll:true});
-    }
-    function website() { question('How much room does your website need?',[
-      ['Up to 4 pages, using a prepared layout',() => recommend('QuickStart is $399 for up to four pages, supplied content, one contact form, and one revision round.','QuickStart — $399')],
-      ['Up to 5 pages, with tailored sections',() => recommend('Standard is $799 for up to five pages, tailored sections, light editing of your supplied copy, and two revision rounds.','Standard — $799')],
-      ['Up to 8 pages, more service detail or booking',() => recommend('Business Plus is $1,499 for up to eight pages, up to two forms, one existing booking-tool embed, and two revision rounds.','Business Plus — $1,499')],
-      ['More pages, or I need help deciding',() => recommend('Let’s review your pages and features together and prepare a specific quote.','Website scope review')]
-    ]); }
-    function shop() { question('How many simple products should we load for launch?',[
-      ['Up to 10 products',() => recommend('Shop 10 is $999. Setup includes a branded free theme, an agreed payment and domestic shipping setup, two revision rounds, testing, and handoff. Shopify fees are separate.','Shop 10 — $999')],
-      ['Up to 25 products',() => recommend('Shop 25 is $1,499. We set up the store and load up to 25 simple products. Shopify subscriptions and payment fees are separate.','Shop 25 — $1,499')],
-      ['Up to 50 products',() => recommend('Shop 50 is $2,199, following a catalog review. It covers initial product loading; you can add products afterward.','Shop 50 — $2,199')],
-      ['Up to 100 products',() => recommend('Shop 100 is $3,299, following a catalog review. Data cleanup, complex variants, and integrations receive separate scope.','Shop 100 — $3,299')],
-      ['More products, complex options, or migration',() => recommend('Let’s review the catalog and workflow before quoting your store.','Custom store scope review')]
-    ]); }
-    function start(focus = true) {
-      answers = []; conversation.replaceChildren(); result.hidden = true;
-      question('What are you looking to launch?',[
-        ['A website for my business',website],
-        ['A new business: website, logo & email',() => recommend('Business Launch is $699: the QuickStart website, a starter logo, domain connection, one business mailbox, and capped first-year domain and email credits. Renewals are paid directly to the providers.','Business Launch — $699')],
-        ['An online store',shop],
-        ['An ordering tool, AI, chat, or integration',() => recommend('These projects are scoped individually. Tell me what customers should be able to do and how the information should reach your business.','Custom system project')],
-        ['Just a logo',() => recommend('Logo Essentials is $249 for one design direction, two revision rounds, an SVG master, PNG exports, and basic brand files.','Logo Essentials — $249')]
-      ],focus);
-    }
-    document.querySelectorAll('[data-open-guide]').forEach(button => { button.hidden = false; button.addEventListener('click',() => { start(false); showGuide(button); }); });
-    document.getElementById('guide-restart').addEventListener('click',() => start());
+    });
+    select(0); switcher.hidden = false;
+  }
+
+  const brief = document.getElementById('project-brief');
+  if (brief) {
+    const field = name => document.getElementById('brief-' + name);
+    const service = field('service');
+    const preset = new URLSearchParams(window.location.search).get('service');
+    if ([...service.options].some(o => o.value === preset)) service.value = preset;
+    document.getElementById('prepare-brief').disabled = false;
+    brief.addEventListener('submit', e => {
+      e.preventDefault();
+      const selected = [...service.options].find(o => o.value === service.value)?.textContent || 'Not sure yet';
+      const body = `Hello Nubric,\n\nBusiness: ${field('business').value.trim() || 'To discuss'}\nInterested in: ${selected}\n\nMy ideas:\n${field('notes').value.trim() || 'I would like to talk through a project.'}\n\nBudget or timing:\n${field('timing').value.trim() || 'To discuss'}\n`;
+      field('output').value = body;
+      const mail = field('email');
+      const href = 'mailto:info@nubric.dev?subject=' + encodeURIComponent('Project inquiry: '+ selected) + '&body=' + encodeURIComponent(body);
+      // Long drafts are copied into webmail; keep mailto URLs within practical limits.
+      mail.setAttribute('href', href.length <= 1900 ? href : 'mailto:info@nubric.dev?subject=Project%20inquiry');
+      mail.textContent = href.length <= 1900 ? 'Open email draft' : 'Open email (paste your draft)';
+      document.getElementById('copy-status').textContent = href.length <= 1900 ? '' : 'This is a longer draft. Copy the text below into your email app.';
+      field('result').hidden = false; field('output').focus();
+    });
+    document.getElementById('copy-brief').addEventListener('click', async () => {
+      const status = document.getElementById('copy-status');
+      try { await navigator.clipboard.writeText(field('output').value); status.textContent = 'Draft copied. Paste it into an email to info@nubric.dev.'; }
+      catch { field('output').focus(); field('output').select(); status.textContent = 'Select and copy the draft text, then paste it into your email app.'; }
+    });
+  }
+  // Keep earlier shared homepage anchors useful after the move to dedicated pages.
+  if (window.location.pathname === '/') {
+    const oldRoutes = {'#work':'/work/','#websites':'/websites','#shops':'/online-stores','#launch':'/branding','#logo':'/branding','#custom-tools':'/custom-solutions','#try-builder':'/custom-solutions#try-builder','#process':'/process','#care':'/care','#contact':'/contact','#apps':'/apps','#faq':'/process'};
+    if (oldRoutes[window.location.hash]) window.location.replace(oldRoutes[window.location.hash]);
   }
 })();
