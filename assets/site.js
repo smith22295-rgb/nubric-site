@@ -55,7 +55,6 @@
       document.getElementById('builder-spec').textContent = `${width} × ${height} in · ${material.name} · ${quantity} ${quantity === 1 ? 'label' : 'labels'}`;
       document.getElementById('builder-total').textContent = money(unit * quantity);
       document.getElementById('builder-unit').textContent = `${money(unit)} each · ${discount ? Math.round(discount * 100) + '% quantity discount' : 'standard quantity pricing'}`;
-      const body = `I'm interested in a product builder for my business.\n\nExample I tried:\nText: ${text}\nMaterial: ${material.name}\nDimensions: ${width} × ${height} in\nQuantity: ${quantity}\n\nMy products and pricing rules:\n\nBusiness name:\nPreferred timing:\n`;
       document.getElementById('builder-inquiry').setAttribute('href', '/start-a-project?service=custom&feature=Product%20builder');
     }
     builder.querySelectorAll('input,select').forEach(control => { control.disabled = false; control.addEventListener('input',update); control.addEventListener('change',update); });
@@ -119,6 +118,23 @@
     const range = demo.querySelector('input[type=range]'), output = demo.querySelector('output');
     const update = () => { const value = Math.max(0,Math.min(100,Number(range.value))); demo.style.setProperty('--reveal',value+'%'); output.textContent=value+'%'; };
     range.disabled=false; range.addEventListener('input',update); update();
+    const stage = demo.querySelector('.comparison-stage');
+    let dragging = false;
+    const moveDivider = event => {
+      const rect = stage.getBoundingClientRect();
+      if (!rect.width) return;
+      range.value = String(Math.round(Math.max(0,Math.min(1,(event.clientX-rect.left)/rect.width))*100));
+      update();
+    };
+    stage.addEventListener('pointerdown',event=>{
+      if (event.button !== 0) return;
+      dragging = true; stage.setPointerCapture?.(event.pointerId); moveDivider(event);
+      range.focus({preventScroll:true});
+    });
+    stage.addEventListener('pointermove',event=>{if(dragging) moveDivider(event);});
+    stage.addEventListener('pointerup',()=>{dragging=false;});
+    stage.addEventListener('pointercancel',()=>{dragging=false;});
+    stage.addEventListener('lostpointercapture',()=>{dragging=false;});
   });
   const lightStage = document.getElementById('light-stage');
   const motionStage = document.getElementById('motion-stage');
