@@ -110,6 +110,8 @@
       mail.textContent = href.length <= 1900 ? 'Open email draft' : 'Open email (paste your draft)';
       document.getElementById('copy-status').textContent = href.length <= 1900 ? '' : 'This is a longer draft. Copy the text below into your email app.';
       field('result').hidden = false; field('output').focus();
+      field('output').setSelectionRange?.(0, 0);
+      field('output').scrollTop = 0;
     });
     document.getElementById('copy-brief').addEventListener('click', async () => {
       const status = document.getElementById('copy-status');
