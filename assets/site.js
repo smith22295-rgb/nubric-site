@@ -114,59 +114,6 @@
     });
     window.addEventListener('pageshow', () => { send.disabled = false; send.textContent = 'Send my inquiry'; status.textContent = ''; });
   }
-  document.querySelectorAll('[data-compare]').forEach(demo => {
-    const range = demo.querySelector('input[type=range]'), output = demo.querySelector('output');
-    const update = () => { const value = Math.max(0,Math.min(100,Number(range.value))); demo.style.setProperty('--reveal',value+'%'); output.textContent=value+'%'; };
-    range.disabled=false; range.addEventListener('input',update); update();
-    const stage = demo.querySelector('.comparison-stage');
-    let dragging = false;
-    const moveDivider = event => {
-      const rect = stage.getBoundingClientRect();
-      if (!rect.width) return;
-      range.value = String(Math.round(Math.max(0,Math.min(1,(event.clientX-rect.left)/rect.width))*100));
-      update();
-    };
-    stage.addEventListener('pointerdown',event=>{
-      if (event.button !== 0) return;
-      dragging = true; stage.setPointerCapture?.(event.pointerId); moveDivider(event);
-      range.focus({preventScroll:true});
-    });
-    stage.addEventListener('pointermove',event=>{if(dragging) moveDivider(event);});
-    stage.addEventListener('pointerup',()=>{dragging=false;});
-    stage.addEventListener('pointercancel',()=>{dragging=false;});
-    stage.addEventListener('lostpointercapture',()=>{dragging=false;});
-  });
-  const lightStage = document.getElementById('light-stage');
-  const motionStage = document.getElementById('motion-stage');
-  if (lightStage && motionStage) {
-    const light = document.getElementById('light-position'), angle = document.getElementById('card-angle');
-    const reset = document.getElementById('reset-light'), play = document.getElementById('play-motion'), pause = document.getElementById('pause-motion');
-    const reduce = document.getElementById('reduce-effects'), status = document.getElementById('motion-status');
-    const preference = window.matchMedia?.('(prefers-reduced-motion: reduce)');
-    reduce.checked = Boolean(preference?.matches);
-    const reduced = () => Boolean(preference?.matches || reduce.checked);
-    const finish = () => { motionStage.classList.remove('playing','paused'); pause.disabled=true; pause.textContent='Pause'; play.textContent='Replay animation'; };
-    const applyPreference = () => { document.body.classList.toggle('effects-reduced',reduced()); if (reduced()) { finish(); status.textContent='Reduced motion is on. The complete design stays visible.'; } };
-    [light,angle,reset,play,reduce].forEach(control=>{control.disabled=false;});
-    const updateLight = () => { lightStage.style.setProperty('--light-x',light.value+'%'); lightStage.style.setProperty('--light-y','40%'); lightStage.style.setProperty('--tilt-y',angle.value+'deg'); lightStage.style.setProperty('--tilt-x','0deg'); };
-    light.addEventListener('input',updateLight); angle.addEventListener('input',updateLight);
-    lightStage.addEventListener('pointermove',event=>{
-      if (event.pointerType==='touch' || reduced()) return;
-      const r=lightStage.getBoundingClientRect(),x=Math.max(0,Math.min(1,(event.clientX-r.left)/r.width)),y=Math.max(0,Math.min(1,(event.clientY-r.top)/r.height));
-      lightStage.style.setProperty('--light-x',(x*100)+'%');lightStage.style.setProperty('--light-y',(y*100)+'%');lightStage.style.setProperty('--tilt-y',((x-.5)*18)+'deg');lightStage.style.setProperty('--tilt-x',((.5-y)*12)+'deg');
-    });
-    lightStage.addEventListener('pointerleave',updateLight);
-    reset.addEventListener('click',()=>{light.value='50';angle.value='0';updateLight();});
-    reduce.addEventListener('change',applyPreference);preference?.addEventListener('change',applyPreference);
-    play.addEventListener('click',()=>{
-      finish();
-      if(reduced()){status.textContent='Reduced motion is on. The complete design stays visible.';return;}
-      void motionStage.offsetWidth;motionStage.classList.add('playing');pause.disabled=false;status.textContent='Playing the content reveal.';
-    });
-    pause.addEventListener('click',()=>{const paused=motionStage.classList.toggle('paused');pause.textContent=paused?'Resume':'Pause';status.textContent=paused?'Animation paused.':'Playing the content reveal.';});
-    motionStage.addEventListener('animationend',event=>{if(event.target.classList.contains('motion-cta')){finish();status.textContent='Preview complete. Play it again whenever you like.';}});
-    updateLight();applyPreference();
-  }
   // Keep earlier shared homepage anchors useful after the move to dedicated pages.
   if (window.location.pathname === '/') {
     const oldRoutes = {'#work':'/work/','#websites':'/websites','#shops':'/online-stores','#launch':'/business-launch','#logo':'/branding','#custom-tools':'/custom-solutions','#try-builder':'/custom-solutions#try-builder','#process':'/process','#care':'/care','#contact':'/contact','#apps':'/apps','#faq':'/process'};
