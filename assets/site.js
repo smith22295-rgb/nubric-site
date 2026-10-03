@@ -99,6 +99,7 @@
     const feature = new URLSearchParams(window.location.search).get('feature');
     const demoNames = ['Before-and-after slider','Interactive lighting and depth','Animated content reveal','Content website with advertising','Product builder'];
     if (demoNames.includes(feature)) field('notes').value = `I liked the ${feature.toLowerCase()} demo. I would like to discuss something similar for my website.\n\nMy idea:\n`;
+    if (feature === 'AI assistant') field('notes').value = 'I would like to discuss an AI assistant for my website.\n\nMy idea:\n';
     const send = document.getElementById('send-brief');
     const status = document.getElementById('brief-status');
     const describeService = () => { field('service-description').value = [...service.options].find(o => o.value === service.value)?.textContent || 'Not sure yet'; };
