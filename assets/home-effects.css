@@ -44,3 +44,12 @@
 @media(max-width:1000px){.home-comparison{padding:28px;gap:30px}.hero-effect-footer{gap:12px}.effect-offer{font-size:11px}}
 @media(max-width:750px){.hero-effect-shell{width:100%;max-width:650px}.hero-effect-footer{padding-top:10px;min-height:75px}.effect-offer{display:block;font-size:12px}.effect-offer>span{display:block}.effect-hint{max-width:23ch}.home-comparison{grid-template-columns:1fr;padding:22px;gap:27px;margin-top:30px}.home-comparison-copy h2{font-size:31px}.home-comparison-copy>p{max-width:58ch}.home-comparison-copy .effect-invitation{min-height:87px}.home-compare-label{top:8px;padding:4px 6px;font-size:9px}.home-compare-label.after{left:8px}.home-compare-label.before{right:8px}.home-comparison-divider>span{width:32px;height:32px;font-size:19px}}
 @media(prefers-reduced-motion:reduce){.hero-effect-shell .hero-showcase{transform:none;transition:none;animation:none}.hero-preview-light{transition:none}.effect-offer.is-revealed{animation:none}}
+/* One four-second demonstration also works with touch or a keyboard. */
+.hero-effect-shell.is-depth-preview .hero-showcase{animation:home-depth-preview 4s ease-in-out both}
+.is-depth-preview .hero-preview-light{opacity:1;background:linear-gradient(110deg,transparent 25%,#fff9 46%,#ffffff24 58%,transparent 75%);background-size:250% 100%;animation:home-light-preview 4s ease-in-out both}
+.depth-try{min-height:44px;min-width:104px}
+@keyframes home-depth-preview{0%,100%{transform:rotateX(0deg) rotateY(0deg)}30%{transform:rotateX(3deg) rotateY(-5deg)}70%{transform:rotateX(-2deg) rotateY(5deg)}}
+@keyframes home-light-preview{0%{background-position:100% 50%;opacity:0}25%,70%{opacity:1}100%{background-position:0% 50%;opacity:0}}
+@media(prefers-reduced-motion:reduce){.hero-effect-shell.is-depth-preview .hero-showcase,.is-depth-preview .hero-preview-light{animation:none;transform:none}}
+
+@media(max-width:850px){.project-switcher button{min-height:44px}}

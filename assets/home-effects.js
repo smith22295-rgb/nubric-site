@@ -21,7 +21,7 @@
     if (effect.hasAttribute('data-home-depth')) {
       const scene = effect.querySelector('.hero-showcase');
       const tryButton = effect.querySelector('[data-try-depth]');
-      let frame = 0, position = null, alternate = false;
+      let frame = 0, position = null, alternate = false, autoPlayed = false;
       const paint = () => {
         frame = 0;
         if (!position) return;
@@ -33,7 +33,8 @@
       const reset = () => {
         if (frame) window.cancelAnimationFrame(frame);
         frame = 0; position = null;
-        effect.classList.remove('is-depth-active');
+        effect.classList.remove('is-depth-active', 'is-depth-preview');
+        tryButton.textContent = 'Replay effect';
         [['--depth-x','50%'],['--depth-y','35%'],['--depth-rx','0deg'],['--depth-ry','0deg']].forEach(([k,v]) => effect.style.setProperty(k,v));
       };
       scene.addEventListener('pointerenter', event => {
@@ -42,20 +43,40 @@
       });
       scene.addEventListener('pointermove', event => {
         if (event.pointerType === 'touch') return;
+        effect.classList.remove('is-depth-preview');
         const rect = scene.getBoundingClientRect();
         if (!rect.width || !rect.height) return;
         position = {x:clamp((event.clientX - rect.left) / rect.width),y:clamp((event.clientY - rect.top) / rect.height)};
         if (!frame) frame = window.requestAnimationFrame(paint);
       });
-      scene.addEventListener('pointerleave', reset);
+      scene.addEventListener('pointerleave', () => { if (!effect.classList.contains('is-depth-preview')) reset(); });
       scene.addEventListener('pointercancel', reset);
       effect.addEventListener('focusin', discover);
-      tryButton.addEventListener('click', () => {
+      const play = () => {
+        if (effect.classList.contains('is-depth-preview')) { reset(); return; }
+        autoPlayed = true;
         alternate = !alternate;
         if (frame) window.cancelAnimationFrame(frame);
         position = alternate ? {x:.78,y:.23} : {x:.22,y:.68};
         effect.classList.add('is-depth-active'); paint(); discover();
+        if (!reduced()) {
+          effect.classList.add('is-depth-preview');
+          tryButton.textContent = 'Stop effect';
+        } else tryButton.textContent = 'Preview lighting';
+      };
+      tryButton.addEventListener('click', play);
+      scene.addEventListener('animationend', event => {
+        if (event.target === scene && event.animationName === 'home-depth-preview') reset();
       });
+      // One short demonstration when the mobile preview enters view. No looping or scroll capture.
+      if (window.IntersectionObserver) {
+        const observer = new window.IntersectionObserver(entries => {
+          if (!entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= .85)) return;
+          if (!autoPlayed && !reduced() && window.matchMedia?.('(max-width: 850px), (hover: none)').matches) play();
+          observer.disconnect();
+        }, {threshold:.85});
+        observer.observe(scene);
+      }
       effect.addEventListener('focusout', event => { if (!effect.contains(event.relatedTarget)) reset(); });
       preference?.addEventListener?.('change', reset);
       tryButton.hidden = false;
