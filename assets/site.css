@@ -47,3 +47,24 @@
 .launch-equation .equation-total{background:var(--ink);color:white}.launch-equation .equation-total dd{color:white}
 .contact-prompts summary{cursor:pointer;font-weight:600;padding:8px 0}.contact-prompts p{margin-top:14px}
 @media(max-width:600px){.website-plans .package{padding:24px}.website-plans .package>p:not(.price):not(.package-scope){min-height:0}.launch-equation{grid-template-columns:1fr 1fr}.launch-equation>div{padding:18px}.launch-equation dd{font-size:29px}.hero-copy h1{font-size:44px;max-width:12ch}}
+
+/* Studio story: the photograph supplies the warmth; the type stays direct. */
+.about-intro{display:grid;grid-template-columns:1.04fr 1fr;column-gap:64px;row-gap:24px;align-items:start;padding-block:65px 55px}
+.about-heading h1{font-size:clamp(38px,4vw,54px);line-height:1.1;letter-spacing:-.045em;margin:16px 0 25px}
+.about-heading .lead{font-size:21px;line-height:1.55}.about-story>p:not(.lead):not(.eyebrow){max-width:62ch}
+.about-heading{grid-column:1;grid-row:1}.about-story{grid-column:1;grid-row:2}.about-photo{grid-column:2;grid-row:1 / span 2}
+.about-story .button{margin-top:10px}.about-photo{margin:10px 0 0}.about-photo img{width:100%;height:auto;display:block;border-radius:18px}
+.about-photo figcaption{font-size:13px;color:var(--muted);margin-top:12px}.about-experience{display:grid;grid-template-columns:1fr 1fr;gap:72px;border-top:1px solid var(--line)}
+.about-experience h2{font-size:30px;line-height:1.2}.about-feedback{display:grid;grid-template-columns:1fr 1.4fr;gap:60px;align-items:center;padding-block:55px}
+.about-feedback h2{font-size:30px}.client-quote{margin:0}.client-quote .review-stars{color:#925c00;font-size:20px;letter-spacing:4px;margin:0 0 16px}
+.client-quote blockquote{margin:0 0 22px}.client-quote blockquote p{font:600 23px/1.55 Manrope,sans-serif;color:var(--ink);letter-spacing:-.02em}
+.client-quote figcaption{display:flex;flex-direction:column;gap:3px;font-size:14px}.client-quote figcaption span{color:var(--muted)}
+.home-feedback{display:grid;grid-template-columns:1fr 1.25fr;gap:60px;align-items:center;padding-block:46px 64px;border-top:1px solid var(--line)}
+.home-feedback h2{font-size:30px}.home-feedback .client-quote blockquote p{font-size:22px}
+.testimonial-feature{display:grid;grid-template-columns:1.1fr 1fr;gap:70px;align-items:start;padding-bottom:70px}
+.testimonial-feature .client-quote blockquote p{font-size:clamp(24px,2.4vw,31px)}.testimonial-feature .fine{margin-top:20px}
+.testimonial-project img{width:100%;height:auto;border:1px solid var(--line);border-radius:12px;display:block}
+.testimonial-project h2{font-size:24px;margin:24px 0 12px}.testimonial-project p{font-size:15px}
+.package .care-fit{font-size:14px;line-height:1.65;margin:0 0 24px;color:var(--muted)}.care-choice{max-width:72ch}.care-choice h3{font-size:24px}
+@media(max-width:1000px){.about-intro{gap:36px}.about-experience,.testimonial-feature{gap:40px}.about-feedback,.home-feedback{gap:35px}.desktop-nav{gap:22px}}
+@media(max-width:750px){.about-intro,.about-experience,.about-feedback,.home-feedback,.testimonial-feature{grid-template-columns:1fr;gap:30px}.about-intro{padding-block:38px 40px}.about-heading,.about-story,.about-photo{grid-column:auto;grid-row:auto}.about-heading{order:0}.about-photo{order:1}.about-story{order:2}.about-heading h1{font-size:39px}.about-heading .lead{font-size:20px}.about-photo{margin:0}.about-feedback{padding-block:40px}.home-feedback{padding-block:35px 45px}.testimonial-feature{padding-bottom:45px}.client-quote blockquote p{font-size:22px}.about-experience h2,.about-feedback h2,.home-feedback h2{font-size:28px}}
