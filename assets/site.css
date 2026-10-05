@@ -68,3 +68,6 @@
 .package .care-fit{font-size:14px;line-height:1.65;margin:0 0 24px;color:var(--muted)}.care-choice{max-width:72ch}.care-choice h3{font-size:24px}
 @media(max-width:1000px){.about-intro{gap:36px}.about-experience,.testimonial-feature{gap:40px}.about-feedback,.home-feedback{gap:35px}.desktop-nav{gap:22px}}
 @media(max-width:750px){.about-intro,.about-experience,.about-feedback,.home-feedback,.testimonial-feature{grid-template-columns:1fr;gap:30px}.about-intro{padding-block:38px 40px}.about-heading,.about-story,.about-photo{grid-column:auto;grid-row:auto}.about-heading{order:0}.about-photo{order:1}.about-story{order:2}.about-heading h1{font-size:39px}.about-heading .lead{font-size:20px}.about-photo{margin:0}.about-feedback{padding-block:40px}.home-feedback{padding-block:35px 45px}.testimonial-feature{padding-bottom:45px}.client-quote blockquote p{font-size:22px}.about-experience h2,.about-feedback h2,.home-feedback h2{font-size:28px}}
+
+/* Show complete tall tool captures inside portfolio thumbnails. */
+.portfolio-image img[src*="foodplot-"],.custom-projects img[src*="foodplot-"],.custom-projects img[src*="file2forge-configurator"]{object-fit:contain;object-position:center;background:#f8fafb}
