@@ -1,0 +1,28 @@
+.portfolio-player.is-coverflow{display:block;padding-bottom:24px}
+.is-coverflow .flow-stage{--cover-width:min(570px,64vw);position:relative;height:clamp(330px,39vw,490px);perspective:1500px;overflow:hidden;touch-action:pan-y;isolation:isolate;background:radial-gradient(ellipse at 50% 76%,#eaf1f7 0,transparent 64%)}
+.is-coverflow .flow-cover{position:absolute;left:50%;top:32px;width:var(--cover-width);transform-style:preserve-3d;transform:translateX(calc(-50% + var(--flow-x))) translateZ(var(--flow-z)) rotateY(var(--flow-turn)) scale(var(--flow-scale));z-index:var(--flow-layer);opacity:var(--flow-opacity);transition:transform .8s cubic-bezier(.2,.78,.18,1),opacity .45s ease;will-change:transform}
+.is-coverflow .portfolio-image{padding:8px;background:#fff;border:1px solid #d8e2eb;border-radius:10px;box-shadow:0 28px 42px -28px #14324f85;position:relative;overflow:visible;outline-offset:6px;cursor:pointer;-webkit-user-drag:none}
+.is-coverflow .portfolio-image img{display:block;width:100%;height:auto;aspect-ratio:1.64;object-fit:cover;object-position:top;border-radius:5px;pointer-events:none;user-select:none;-webkit-user-drag:none}
+.is-coverflow .portfolio-image::after{content:"";position:absolute;left:8px;right:8px;top:calc(100% + 14px);height:42%;background-image:var(--flow-image);background-size:100% auto;background-position:top;background-repeat:no-repeat;transform:scaleY(-1);opacity:.12;mask-image:linear-gradient(to bottom,transparent 0,#000 100%);pointer-events:none;border-radius:4px}
+.is-coverflow .portfolio-copy{display:none}
+.is-coverflow .is-dragging .flow-cover{transition:none}
+.is-coverflow .flow-stage.is-dragging{cursor:grabbing}
+.flow-controls{display:flex;align-items:center;justify-content:center;gap:22px;position:relative;z-index:2;margin-top:4px}
+.flow-arrow{display:grid;place-items:center;width:48px;height:48px;min-height:48px;border:1px solid #c9d7e2;border-radius:50%;background:#fff;color:#16324f;font-size:23px;cursor:pointer}
+.flow-arrow:hover{background:#edf4fa;border-color:#16324f}
+.flow-count{font-size:13px;font-weight:600;color:#526d82;min-width:44px;text-align:center;font-variant-numeric:tabular-nums}
+.flow-pagination{display:flex;align-items:center;justify-content:center;gap:3px;margin:14px 0 0}
+.flow-dot{width:30px;height:32px;border:0;background:transparent;display:grid;place-items:center;cursor:pointer;padding:0}
+.flow-dot::before{content:"";width:6px;height:6px;border-radius:4px;background:#a5b7c7;transition:width .25s ease,background .25s ease}
+.flow-dot[aria-pressed=true]::before{width:24px;background:#16324f}
+.flow-hint{text-align:center;color:#657b8d;font-size:12px;margin:4px 0 26px;max-width:none;width:100%}
+.flow-caption{border-top:1px solid #dce5ec;padding:28px 4px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:30px;align-items:center}
+.flow-title{font-size:clamp(25px,3.5vw,38px);line-height:1.15;margin:0 0 12px}
+.flow-status{display:inline-block;font-size:12px;color:#4d667b;margin-bottom:12px}
+.flow-description{max-width:70ch;font-size:15px;line-height:1.7;margin:0 0 12px}
+.flow-price{font-size:13px;font-weight:600;color:#16324f;margin:0}
+.flow-open{min-width:150px;white-space:nowrap}
+.flow-arrow:focus-visible,.flow-dot:focus-visible{outline:3px solid #ee7600;outline-offset:4px}
+@media(max-width:760px){.is-coverflow .flow-stage{--cover-width:78vw;height:clamp(275px,75vw,410px);perspective:1000px}.is-coverflow .flow-cover{top:26px}.is-coverflow .portfolio-image{padding:5px;border-radius:8px}.is-coverflow .portfolio-image::after{left:5px;right:5px}.flow-caption{grid-template-columns:1fr;gap:20px;padding-top:23px}.flow-open{justify-self:start}.flow-hint{margin-bottom:20px}.flow-controls{gap:20px}.flow-description{font-size:14px}}
+@media(prefers-reduced-motion:reduce){.is-coverflow .flow-cover,.flow-dot::before{transition:none}.is-coverflow .flow-cover{will-change:auto}}
+@media print{.portfolio-player.is-coverflow{display:grid}.is-coverflow .flow-stage{height:auto;overflow:visible;perspective:none;display:grid;grid-template-columns:1fr 1fr;gap:24px}.is-coverflow .flow-cover{position:static;width:auto;transform:none!important;opacity:1!important}.is-coverflow .portfolio-copy{display:block}.is-coverflow .portfolio-image::after,.flow-controls,.flow-pagination,.flow-hint,.flow-caption{display:none}}
