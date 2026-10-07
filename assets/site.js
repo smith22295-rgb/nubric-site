@@ -97,7 +97,7 @@
     const preset = new URLSearchParams(window.location.search).get('service');
     if ([...service.options].some(o => o.value === preset)) service.value = preset;
     const feature = new URLSearchParams(window.location.search).get('feature');
-    const demoNames = ['Before-and-after slider','Interactive lighting and depth','Animated content reveal','Content website with advertising','Product builder'];
+    const demoNames = ['Before-and-after slider','Interactive lighting and depth','Animated content reveal','Content website with advertising','Product builder','Cover-flow gallery'];
     if (demoNames.includes(feature)) field('notes').value = `I liked the ${feature.toLowerCase()} demo. I would like to discuss something similar for my website.\n\nMy idea:\n`;
     if (feature === 'AI assistant') field('notes').value = 'I would like to discuss an AI assistant for my website.\n\nMy idea:\n';
     const send = document.getElementById('send-brief');
