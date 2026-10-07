@@ -1,0 +1,93 @@
+/* Nubric: the studio, project journey, package choice and consultation. */
+.studio-section{padding:78px 0;background:#f5f8fc;margin-top:28px}
+.studio-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:58px;align-items:center}
+.studio-photo img{width:100%;height:auto;border-radius:13px;border:1px solid #d1dfe9;box-shadow:0 16px 35px -28px #16324f70}
+.studio-photo figcaption{font-size:12px;color:#526477;margin-top:12px}
+.studio-story h2{max-width:20ch;margin-bottom:20px}
+.studio-story>p:not(.eyebrow){font-size:17px;line-height:1.75;max-width:64ch}
+.studio-promises{list-style:none;padding:0;margin:24px 0;display:flex;gap:12px 24px;flex-wrap:wrap}
+.studio-promises li{position:relative;padding-left:22px;font-size:13px;color:#16324f;font-weight:550;margin:0}
+.studio-promises li::before{content:'✓';position:absolute;left:0;color:#307a70}
+.studio-story .text-link{font-size:14px}
+.studio-feedback{display:grid;grid-template-columns:220px minmax(0,1fr);gap:44px;margin-top:38px;padding-top:32px;border-top:1px solid #d2dde8;align-items:start}
+.studio-feedback-meta p{margin:0 0 8px;font-size:13px}
+.studio-feedback-meta .review-stars{color:#9f5418;font-size:18px;letter-spacing:3px}
+.studio-feedback-meta strong{display:block}
+.studio-feedback blockquote{margin:0}
+.studio-feedback blockquote p{font-family:Manrope,sans-serif;font-size:clamp(20px,2.2vw,27px);font-weight:600;line-height:1.5;color:#16324f;max-width:65ch;margin:0 0 15px}
+.studio-feedback .text-link{font-size:13px}
+
+.journey{padding:8px 0 36px}
+.journey-heading{display:flex;justify-content:space-between;gap:35px;align-items:end;margin-bottom:25px}
+.journey-heading h2{font-size:30px;max-width:25ch;margin:0}
+.journey-heading p{font-size:14px;max-width:47ch;margin:0}
+.journey-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.journey-tab{display:flex;align-items:center;gap:12px;min-height:72px;padding:16px;border:1px solid #d2dde8;border-radius:9px;color:#16324f;text-decoration:none;font-size:14px;font-weight:650;background:#fff;transition:background .2s,border-color .2s}
+.journey-tab>span:first-child{display:grid;place-items:center;width:30px;height:30px;border:1px solid #bdcfde;border-radius:50%;font-size:12px;flex:none}
+.journey-tab:hover{color:#16324f;border-color:#7399ba;background:#f3f8fc}
+.journey-tab[aria-selected=true]{border-color:#16324f;background:#16324f;color:#fff}
+.journey-tab[aria-selected=true]>span:first-child{background:#fff;color:#16324f;border-color:#fff}
+.journey-panel{display:grid;grid-template-columns:minmax(0,.83fr) minmax(0,1.17fr);border:1px solid #d2dde8;border-radius:14px;overflow:hidden;background:#fff;margin-bottom:18px}
+.journey-visual{background:#edf4fa;display:flex;align-items:center;justify-content:center;padding:32px;min-width:0;min-height:350px}
+.journey-visual svg{width:100%;height:auto;max-width:350px}
+.journey-copy{padding:36px;min-width:0}
+.journey-copy h2{font-size:32px;max-width:22ch;margin-bottom:16px}
+.journey-copy>p{font-size:15px;line-height:1.75;max-width:65ch}
+.journey-responsibilities{display:grid;grid-template-columns:1fr 1fr;gap:25px;margin:26px 0 22px;padding-top:22px;border-top:1px solid #d8e3ec}
+.journey-responsibilities h3{font-family:'Public Sans',sans-serif;font-size:13px;font-weight:650;letter-spacing:0;margin-bottom:8px}
+.journey-responsibilities p{font-size:13px;line-height:1.7;margin:0}
+.journey-copy .journey-result{font-weight:550;color:#16324f;margin:0}
+.journey-copy .journey-payment{font-size:12px;margin-top:15px}
+.journey-aftercare{padding:24px 27px;background:#f2f7f5;border:1px solid #d4e2db;border-radius:10px;display:flex;align-items:center;gap:32px;justify-content:space-between}
+.journey-aftercare h3{font-size:19px;margin:0 0 7px}
+.journey-aftercare p{font-size:14px;margin:0;max-width:77ch}
+.journey-aftercare a{flex:none;font-size:13px}
+.journey.is-journey-ready .journey-panel:not([hidden]) .journey-visual svg{animation:journey-appear .38s ease both}
+@keyframes journey-appear{from{opacity:.6;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.plan-guide{padding:22px 25px;background:#f5f8fc;border:1px solid #d2dde8;border-radius:12px;margin-bottom:22px}
+.plan-guide-heading{display:flex;gap:24px;justify-content:space-between;align-items:center;margin-bottom:17px}
+.plan-guide h2{font-size:23px;margin:0}
+.plan-guide-heading>p{font-size:13px;max-width:52ch;margin:0}
+.plan-guide-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.plan-guide-controls button{background:#fff;border:1px solid #bfd0df;border-radius:7px;color:#16324f;text-align:left;padding:13px 15px;min-height:49px;font-size:13px;font-weight:550;cursor:pointer}
+.plan-guide-controls button:hover{background:#edf4fa;border-color:#16324f}
+.plan-guide-controls button[aria-pressed=true]{background:#16324f;color:#fff;border-color:#16324f}
+.plan-guide p[data-plan-note]{font-size:13px;margin:15px 0 0;color:#526477;min-height:22px}
+.website-plans .package.plan-card{position:relative;border-top:4px solid var(--plan-color,#4373ad);box-shadow:0 5px 15px -12px #16324f40;transition:border-color .25s,box-shadow .25s;background:#fff}
+.plan-card.plan-starter{--plan-color:#4373ad}
+.plan-card.plan-standard{--plan-color:#307a70}
+.plan-card.plan-pro{--plan-color:#7656a7}
+.website-plans .plan-card.is-picked{border-color:var(--plan-color);box-shadow:0 0 0 2px var(--plan-color),0 14px 25px -20px #16324f50}
+.website-plans .plan-card .plan-map{display:flex;align-items:center;gap:5px;margin-bottom:17px;min-height:20px}
+.plan-map i{display:block;width:12px;height:16px;background:#edf4fa;border:1px solid #bbcede;border-radius:2px}
+.plan-map i:first-child{background:var(--plan-color);border-color:var(--plan-color);width:20px;height:20px}
+.website-plans .plan-card h2{font-size:27px;margin-bottom:8px}
+.website-plans .package.plan-card p.plan-audience{font-size:12px;color:#526477;min-height:38px;margin:0 0 15px}
+.website-plans .plan-card .price{margin:10px 0 22px}
+.website-plans .plan-card .package-scope{border-top:0;padding:10px 12px;background:#f5f8fc;border-radius:6px;font-size:14px;margin-bottom:20px}
+.website-plans .plan-card .button{background:#16324f;color:#fff;border-color:#16324f}
+.website-plans .plan-card .button:hover{background:#244d73;border-color:#244d73}
+
+.closing.consult-section{padding:62px 0}
+.consult-panel{border-radius:15px;background:#16324f;padding:45px 46px;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:60px;align-items:center}
+.consult-panel h2{color:#fff;font-size:clamp(29px,3.2vw,41px);max-width:24ch;line-height:1.18;margin:0 0 20px}
+.consult-panel p{color:#e3edf5;max-width:64ch;font-size:15px;line-height:1.75}
+.consult-panel p:last-child{margin:0}
+.consult-panel .consult-label{font-size:12px;color:#d6e8f8;margin-bottom:17px;font-weight:550}
+.consult-panel .consult-note{font-size:13px;color:#d6e8f8;margin-top:21px}
+.consult-actions{display:flex;flex-direction:column;gap:10px;min-width:0}
+.consult-actions .button{justify-content:space-between;gap:15px;width:100%;min-height:49px;padding:13px 17px}
+.consult-actions .button:first-child{background:#fff;border-color:#fff;color:#16324f}
+.consult-actions .button:first-child:hover{background:#e7f0f8;border-color:#e7f0f8}
+.consult-actions .consult-form,.consult-actions .consult-call{background:transparent;color:#fff;border-color:#6988a3}
+.consult-actions .consult-form:hover,.consult-actions .consult-call:hover{background:#284b69;color:#fff;border-color:#9cb4c7}
+.consult-actions .consult-response{font-size:12px;color:#d6e8f8;margin:9px 0 0}
+.consult-actions svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.consult-panel strong{color:inherit}
+.consult-actions a:focus-visible{outline:3px solid #ffa35e;outline-offset:4px}
+
+@media(max-width:1000px){.studio-grid{gap:35px}.studio-feedback{grid-template-columns:180px 1fr;gap:30px}.journey-tab{padding:13px;font-size:12px;gap:8px}.journey-panel{grid-template-columns:.8fr 1.2fr}.journey-visual{padding:18px}.journey-copy{padding:27px}.journey-copy h2{font-size:28px}.consult-panel{gap:35px;padding:35px}.plan-guide-heading{align-items:start}}
+@media(max-width:760px){.studio-section{padding:46px 0}.studio-grid{grid-template-columns:1fr;gap:27px}.studio-photo{max-width:480px}.studio-story>p:not(.eyebrow){font-size:16px}.studio-promises{gap:10px 20px}.studio-feedback{grid-template-columns:1fr;gap:16px}.studio-feedback-meta p{display:inline-block;margin-right:15px}.studio-feedback-meta .review-stars{display:block}.studio-feedback blockquote p{font-size:21px}.journey-heading{display:block}.journey-heading h2{font-size:28px;margin-bottom:13px}.journey-tabs{grid-template-columns:1fr 1fr;gap:9px}.journey-tab{min-height:63px;font-size:13px}.journey-panel{grid-template-columns:1fr}.journey-visual{min-height:0;padding:22px}.journey-visual svg{max-width:270px}.journey-copy{padding:24px}.journey-copy h2{font-size:29px}.journey-aftercare{display:block;padding:23px}.journey-aftercare a{display:inline-block;margin-top:16px}.plan-guide{padding:22px}.plan-guide-heading{display:block}.plan-guide h2{margin-bottom:10px}.plan-guide-controls{grid-template-columns:1fr}.plan-guide-controls button{text-align:left}.website-plans .package.plan-card p.plan-audience{min-height:0}.consult-panel{grid-template-columns:1fr;gap:27px;padding:29px 25px}.consult-panel h2{font-size:31px}.closing.consult-section{padding:40px 0}.consult-panel .consult-note{margin-top:17px}}
+@media(max-width:400px){.journey-tab{padding:11px;font-size:12px}.journey-tab>span:first-child{width:25px;height:25px}.journey-responsibilities{grid-template-columns:1fr;gap:16px}.studio-promises{display:grid;gap:11px}.consult-panel{padding:26px 22px}}
+@media(prefers-reduced-motion:reduce){.journey.is-journey-ready .journey-panel:not([hidden]) .journey-visual svg{animation:none}.journey-tab,.website-plans .package.plan-card{transition:none}}
