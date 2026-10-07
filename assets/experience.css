@@ -77,7 +77,7 @@
 .consult-panel .consult-label{font-size:12px;color:#d6e8f8;margin-bottom:17px;font-weight:550}
 .consult-panel .consult-note{font-size:13px;color:#d6e8f8;margin-top:21px}
 .consult-actions{display:flex;flex-direction:column;gap:10px;min-width:0}
-.consult-actions .button{justify-content:space-between;gap:15px;width:100%;min-height:49px;padding:13px 17px}
+.consult-actions .button{margin:0;justify-content:space-between;gap:15px;width:100%;min-height:49px;padding:13px 17px}
 .consult-actions .button:first-child{background:#fff;border-color:#fff;color:#16324f}
 .consult-actions .button:first-child:hover{background:#e7f0f8;border-color:#e7f0f8}
 .consult-actions .consult-form,.consult-actions .consult-call{background:transparent;color:#fff;border-color:#6988a3}
