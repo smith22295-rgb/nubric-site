@@ -1,6 +1,19 @@
 (() => {
   'use strict';
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const section = document.getElementById('services');
+  if (section && !reduced.matches) {
+    if ('IntersectionObserver' in window) {
+      const reveal = new IntersectionObserver(entries => {
+        if (entries.some(entry=>entry.isIntersecting)) {
+          section.classList.add('is-scene-ready');
+          reveal.disconnect();
+        }
+      }, {threshold:.12});
+      reveal.observe(section);
+    } else section.classList.add('is-scene-ready');
+  }
+
   document.querySelectorAll('#services .service-route').forEach(card => {
     let frame = 0, pointer = null;
     const reset = () => {
