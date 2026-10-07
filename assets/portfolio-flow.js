@@ -12,54 +12,18 @@
     url: card.querySelector('.portfolio-image').getAttribute('href'),
     image: card.querySelector('img').getAttribute('src')
   }));
-  const make = (tag, cls, text) => {
-    const node = document.createElement(tag);
-    if (cls) node.className = cls;
-    if (text) node.textContent = text;
-    return node;
-  };
-  const stage = make('div', 'flow-stage');
-  stage.setAttribute('role','group');
-  stage.setAttribute('aria-label','Project covers. Use left and right arrows to browse.');
-  covers.forEach((card, i) => {
-    card.classList.add('flow-cover');
-    card.style.setProperty('--flow-image',`url("${records[i].image}")`);
-    stage.append(card);
-  });
-  player.prepend(stage);
-  const controls = make('div','flow-controls');
-  const prev = make('button','flow-arrow','←');
-  const next = make('button','flow-arrow','→');
-  prev.type = next.type = 'button';
-  prev.setAttribute('aria-label','Previous project');
-  next.setAttribute('aria-label','Next project');
-  const count = make('span','flow-count');
-  count.setAttribute('aria-hidden','true');
-  controls.append(prev,count,next);
-  const pages = make('nav','flow-pagination');
-  pages.setAttribute('aria-label','Choose a project');
-  const dots = records.map(record => {
-    const dot = make('button','flow-dot');
-    dot.type = 'button';
-    dot.setAttribute('aria-label',record.name);
-    dot.title = record.name;
-    pages.append(dot);
-    return dot;
-  });
-  const caption = make('div','flow-caption');
-  caption.setAttribute('aria-live','polite');
-  caption.setAttribute('aria-atomic','true');
-  const info = make('div','flow-info');
-  const status = make('span','flow-status');
-  const title = make('h2','flow-title');
-  const description = make('p','flow-description');
-  const price = make('p','flow-price');
-  const open = make('a','button flow-open','Open project');
-  info.append(status,title,description,price);
-  caption.append(info,open);
-  player.append(controls,pages,make('p','flow-hint','Drag, swipe or use the arrows to explore.'),caption);
-  player.classList.add('portfolio-player','is-coverflow');
-  player.setAttribute('aria-roledescription','carousel');
+  // The first frame is rendered in HTML. JavaScript only adds browsing behavior.
+  const stage = player.querySelector('.flow-stage');
+  const prev = player.querySelector('[data-flow-prev]');
+  const next = player.querySelector('[data-flow-next]');
+  const count = player.querySelector('.flow-count');
+  const dots = [...player.querySelectorAll('[data-flow-dot]')];
+  const status = player.querySelector('.flow-status');
+  const title = player.querySelector('.flow-title');
+  const description = player.querySelector('.flow-description');
+  const price = player.querySelector('.flow-price');
+  const open = player.querySelector('.flow-open');
+  if (!stage || !prev || !next || dots.length !== covers.length) return;
   let current = 0, drag = null, suppressClickUntil = 0;
   const distance = value => ((value + covers.length / 2) % covers.length + covers.length) % covers.length - covers.length / 2;
   const paint = (fraction = 0) => {
@@ -113,9 +77,16 @@
       if (event.key===' ') { event.preventDefault(); select(i); }
     });
   });
-  dots.forEach((dot,i) => dot.addEventListener('click',() => select(i)));
-  prev.addEventListener('click',() => select(current-1));
-  next.addEventListener('click',() => select(current+1));
+  const bindControl = (control, action) => {
+    control.setAttribute('role','button');
+    control.addEventListener('click',event => { event.preventDefault(); action(); });
+    control.addEventListener('keydown',event => {
+      if (event.key===' ') { event.preventDefault(); action(); }
+    });
+  };
+  dots.forEach((dot,i) => bindControl(dot,() => select(i)));
+  bindControl(prev,() => select(current-1));
+  bindControl(next,() => select(current+1));
   stage.addEventListener('keydown',event => {
     let index;
     if (event.key==='ArrowLeft') index=current-1;
