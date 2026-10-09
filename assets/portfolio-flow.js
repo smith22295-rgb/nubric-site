@@ -70,7 +70,7 @@
     link.setAttribute('aria-label',`Show ${records[i].name}`);
     link.addEventListener('click',event => {
       event.preventDefault();
-      if (performance.now() < suppressClickUntil) return;
+      if (event.detail !== 0 && performance.now() < suppressClickUntil) return;
       select(i);
     });
     link.addEventListener('keydown',event => {
@@ -98,6 +98,7 @@
   stage.addEventListener('dragstart',event=>event.preventDefault());
   stage.addEventListener('pointerdown',event => {
     if (event.button!==0 || !event.isPrimary) return;
+    suppressClickUntil=0;
     drag={id:event.pointerId,x:event.clientX,y:event.clientY,moved:false};
   });
   stage.addEventListener('pointermove',event => {
@@ -118,7 +119,7 @@
     stage.classList.remove('is-dragging');
     if (stage.hasPointerCapture(event.pointerId)) stage.releasePointerCapture(event.pointerId);
     if (moved) {
-      suppressClickUntil=performance.now()+300;
+      suppressClickUntil=performance.now()+750;
       const step = Math.min(stage.clientWidth*.29,300);
       const offset = !cancelled && Math.abs(dx)>Math.min(stage.clientWidth*.1,70)
         ? Math.round(-dx/step) || (dx<0 ? 1 : -1) : 0;
@@ -127,7 +128,11 @@
   };
   stage.addEventListener('pointerup',event=>finish(event));
   stage.addEventListener('pointercancel',event=>finish(event,true));
-  stage.addEventListener('lostpointercapture',event=>finish(event,true));
+  stage.addEventListener('lostpointercapture',event=>{
+    // Touch begins with implicit capture on a card. Its capture-loss event
+    // bubbles when the stage takes over; that handoff is not a cancelled swipe.
+    if (event.target===stage) finish(event,true);
+  });
   stage.addEventListener('pointerleave',()=>{ if (drag && !drag.moved) drag=null; });
   window.addEventListener('blur',()=>{ if (drag) { drag=null; stage.classList.remove('is-dragging'); paint(); } });
   if ('ResizeObserver' in window) new ResizeObserver(()=>paint()).observe(stage);
