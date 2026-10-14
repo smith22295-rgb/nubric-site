@@ -1,0 +1,25 @@
+# The website repository contains public source and portfolio assets only.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+*.ncard
+*.zip
+*.docx
+*.xlsx
+/Data/
+/Backups/
+/Exports/
+/ClientDesk/
+/OperationsDesk/
+/CardStudio/
+/client-data/
+/.private/
+/Clients/
+__pycache__/
+*.pyc
