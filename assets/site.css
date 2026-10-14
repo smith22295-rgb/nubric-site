@@ -71,3 +71,5 @@
 
 /* Show complete tall tool captures inside portfolio thumbnails. */
 .portfolio-image img[src*="foodplot-"],.custom-projects img[src*="foodplot-"],.custom-projects img[src*="file2forge-configurator"]{object-fit:contain;object-position:center;background:#f8fafb}
+
+.footer-credit{display:block;margin-top:5px;font-size:11px;line-height:1.5}.footer-credit a{text-decoration:underline;text-underline-offset:3px}
