@@ -6,6 +6,8 @@
   if (covers.length < 2) return;
   const records = covers.map(card => ({
     name: card.querySelector('h2').textContent.trim(),
+    outcome: card.getAttribute('data-outcome') || '',
+    capabilities: (card.getAttribute('data-capabilities') || '').split('|').filter(Boolean),
     description: card.querySelector('.portfolio-copy p:not(.eyebrow):not(.portfolio-price)').textContent.trim(),
     price: card.querySelector('.portfolio-price').textContent.trim(),
     status: card.querySelector('.eyebrow').textContent.trim(),
@@ -23,6 +25,8 @@
   const description = player.querySelector('.flow-description');
   const price = player.querySelector('.flow-price');
   const open = player.querySelector('.flow-open');
+  const outcome = player.querySelector('.flow-outcome');
+  const capabilities = player.querySelector('[data-flow-capabilities]');
   if (!stage || !prev || !next || dots.length !== covers.length) return;
   let current = 0, drag = null, suppressClickUntil = 0;
   const distance = value => ((value + covers.length / 2) % covers.length + covers.length) % covers.length - covers.length / 2;
@@ -47,6 +51,12 @@
     status.textContent = record.status;
     title.textContent = record.name;
     description.textContent = record.description;
+    if (outcome) outcome.textContent = record.outcome;
+    if (capabilities) capabilities.replaceChildren(...record.capabilities.map(value => {
+      const item = document.createElement('li');
+      item.textContent = value;
+      return item;
+    }));
     price.textContent = record.price;
     open.href = record.url;
     open.setAttribute('aria-label',`Open ${record.name} project`);
