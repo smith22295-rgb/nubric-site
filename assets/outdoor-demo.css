@@ -1,46 +1,45 @@
-/* One regional, interactive example. Everything else stays quiet. */
+/* A photographic outdoor concept, with a live terrace finish and four matched views. */
 .outdoor-section{padding-block:70px;scroll-margin-top:100px}
 .outdoor-intro{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:end;margin-bottom:30px}
 .outdoor-intro h2{font-size:clamp(29px,3.2vw,42px);line-height:1.2;max-width:20ch;margin:0}
 .outdoor-intro p{font-size:15px;line-height:1.8;max-width:51ch;margin:0;color:#526477}
-.outdoor-demo{--deck-top:#d8cbb4;--deck-joint:#bbae97;display:grid;grid-template-columns:minmax(0,1fr) 298px;border:1px solid #d4e1df;border-radius:14px;overflow:hidden;background:#fff}
-.outdoor-demo[data-finish=driftwood]{--deck-top:#aa8f71;--deck-joint:#8b7157}
-.outdoor-demo[data-finish=charcoal]{--deck-top:#687778;--deck-joint:#4e6265}
-.outdoor-preview{position:relative;min-width:0;background:#edf3f0;transition:background .65s}
-.outdoor-preview-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:24px 28px 0;position:relative;z-index:1;color:#23483f}
+.outdoor-demo{--terrace-filter:none;display:grid;grid-template-columns:minmax(0,1fr) 280px;border:1px solid #d4e1df;border-radius:14px;overflow:hidden;background:#fff}
+.outdoor-demo[data-finish=sand]{--terrace-filter:sepia(.5) saturate(.75) brightness(.82)}
+.outdoor-demo[data-finish=slate]{--terrace-filter:grayscale(.9) brightness(.57) contrast(1.08)}
+.outdoor-preview{position:relative;min-width:0;align-self:center;background:#edf3f0;transition:background .65s}
+.outdoor-preview-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:19px 24px;position:relative;color:#23483f}
 .outdoor-preview-heading strong{color:inherit;font:600 17px Sora,Arial,sans-serif;letter-spacing:-.04em}
-.outdoor-preview-heading>span{font-size:10px;color:#527068}
-.outdoor-scene{display:block;width:100%;height:auto;overflow:hidden;transition:filter .65s}
-.outdoor-scene-caption{display:flex;justify-content:space-between;align-items:center;gap:10px;position:relative;margin:0 28px 23px;font-size:11px;color:#36584e;line-height:1.6}
+.outdoor-preview-heading>span{font-size:10px;color:#527068;white-space:nowrap}
+.outdoor-scene{position:relative;display:block;width:100%;aspect-ratio:3/2;overflow:hidden;background:#e4e9e7;isolation:isolate}
+.outdoor-photo{position:absolute;inset:0;opacity:0;transition:opacity .65s ease;pointer-events:none}
+.outdoor-photo.is-visible{opacity:1}
+.outdoor-photo img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain;max-width:none}
+/* The clipping follows the outside edge of the pool coping and lounge step.
+   Only the foreground terrace changes; its photographic texture and shadows remain. */
+.outdoor-photo .patio-surface{clip-path:polygon(0 66.6%,14.2% 78%,80.7% 56.2%,81.7% 56.4%,88.4% 53.4%,100% 54.8%,100% 100%,0 100%);filter:var(--terrace-filter);transition:filter .45s ease}
+.outdoor-scene-caption{max-width:none;display:flex;justify-content:space-between;align-items:center;gap:10px;position:relative;margin:0;padding:16px 24px;font-size:11px;color:#36584e;line-height:1.6}
 .outdoor-live{display:flex;align-items:center;gap:6px;white-space:nowrap}
 .outdoor-live i{width:5px;height:5px;border-radius:50%;background:#3e7964}
-.outdoor-scene .deck-surface,.outdoor-scene polygon,.outdoor-scene polyline{transition:fill .45s,stroke .45s}
-.patio-pergola{transition:opacity .4s}
-[data-pergola=false] .patio-pergola{opacity:0}
-.evening-glow,.evening-window,.pool-evening{opacity:0;transition:opacity .65s}
+.is-loading .outdoor-live i{background:#bc630b;animation:patio-loading 1s ease-in-out infinite alternate}
+@keyframes patio-loading{to{opacity:.35}}
 [data-evening=true] .outdoor-preview{background:#213d4b}
-[data-evening=true] .outdoor-scene{filter:brightness(.83) saturate(.88)}
 [data-evening=true] .outdoor-preview-heading,[data-evening=true] .outdoor-scene-caption{color:#e4f0e7}
 [data-evening=true] .outdoor-preview-heading>span{color:#bfd5d0}
 [data-evening=true] .outdoor-live i{background:#ffdd91}
-[data-evening=true] .evening-glow{opacity:1}
-[data-evening=true] .evening-window{opacity:.65}
-[data-evening=true] .pool-evening{opacity:.25}
-.outdoor-controls{padding:28px 24px;border-left:1px solid #d4e1df;align-self:center}
+.outdoor-controls{padding:26px 22px;border-left:1px solid #d4e1df;align-self:stretch;display:flex;flex-direction:column;justify-content:center}
 .outdoor-controls[hidden],.patio-brief[hidden]{display:none}
 .outdoor-controls h3{font-size:22px;margin:0 0 9px}
 .outdoor-instruction{font-size:12px;line-height:1.75;margin:0 0 23px;color:#526477}
 .patio-finishes{padding:0;margin:0 0 19px;border:0;min-width:0}
 .patio-finishes legend{font-size:12px;font-weight:600;margin-bottom:9px}
 .patio-finishes>div{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
-.patio-finishes label{position:relative;display:grid;gap:7px;justify-items:center;cursor:pointer;padding:5px 3px 8px;border:1px solid #d7dfdf;border-radius:6px;min-height:67px;font-size:10px;color:#3e5361}
+.patio-finishes label{position:relative;display:grid;gap:7px;justify-items:center;cursor:pointer;padding:5px 3px 8px;border:1px solid #d7dfdf;border-radius:6px;min-height:67px;font-size:11px;color:#3e5361}
 .patio-finishes input,.patio-toggle input{position:absolute;width:1px;height:1px;opacity:0;margin:0}
 .patio-finishes label:has(input:checked){border-color:#ad400d;box-shadow:0 0 0 1px #ad400d;color:#863007;background:#fffaf5}
 .patio-finishes label:has(input:focus-visible),.patio-toggle:has(input:focus-visible){outline:3px solid #427ea7;outline-offset:3px}
-.patio-swatch{display:block;width:100%;height:27px;border-radius:3px;background-size:22px 14px;border:1px solid #18332415}
-.swatch-shellstone{background-color:#d8cbb4;background-image:linear-gradient(90deg,transparent 95%,#a7997c 95%),linear-gradient(0deg,transparent 92%,#a7997c 92%)}
-.swatch-driftwood{background-color:#aa8f71;background-image:repeating-linear-gradient(0deg,#aa8f71 0 5px,#9b8167 6px,#aa8f71 7px 12px)}
-.swatch-charcoal{background-color:#687778;background-image:linear-gradient(90deg,transparent 95%,#415356 95%),linear-gradient(0deg,transparent 92%,#415356 92%)}
+.patio-swatch{display:block;width:100%;height:29px;border-radius:3px;background-image:url('/assets/demos/patio-v2/pergola-day.webp');background-size:440px auto;background-position:65% 95%;border:1px solid #18332415}
+.swatch-sand{filter:sepia(.5) saturate(.75) brightness(.82)}
+.swatch-slate{filter:grayscale(.9) brightness(.57) contrast(1.08)}
 .patio-toggle{position:relative;display:flex;align-items:center;justify-content:space-between;gap:13px;padding:15px 0;min-height:65px;border-top:1px solid #e1e8e8;cursor:pointer;font-size:12px;font-weight:600}
 .patio-toggle small{display:block;font-size:10px;font-weight:400;color:#60717a;margin-top:3px;line-height:1.6}
 .patio-switch{position:relative;flex:0 0 34px;height:20px;border-radius:20px;background:#c2cecf;transition:background .2s}
@@ -48,7 +47,9 @@
 .patio-toggle:has(input:checked) .patio-switch{background:#38745e}
 .patio-toggle:has(input:checked) .patio-switch::before{transform:translateX(14px)}
 .outdoor-controls .patio-review{width:100%;font-size:12px;min-height:44px;margin-top:12px;padding:11px 12px}
+.outdoor-controls .patio-review:disabled{opacity:.65;cursor:wait}
 .patio-note{font-size:10px;line-height:1.65;color:#637580;margin:10px 0 0;text-align:center}
+.patio-error{grid-column:1/-1;font-size:11px;line-height:1.6;margin:12px 0 0;color:#8a330b}.patio-error[hidden]{display:none}
 .patio-brief{grid-column:1/-1;display:flex;gap:30px;justify-content:space-between;align-items:center;border-top:1px solid #d4e1df;padding:25px 28px;background:#f7faf8}
 .patio-brief-label{font-size:11px;font-weight:600;color:#38745e}
 .patio-brief p{font-size:14px;line-height:1.75;max-width:65ch;margin:9px 0}
@@ -60,8 +61,15 @@
 .outdoor-fallback{font-size:14px;line-height:1.75;padding:25px;max-width:45ch}
 .home-local-note{font-size:12px!important;line-height:1.8;max-width:65ch!important;margin:25px 0 0!important;color:#526477}
 .home-local-note a{color:inherit;text-underline-offset:3px}
-@media(min-width:1100px){.outdoor-scene{margin-top:0}.outdoor-preview{display:flex;flex-direction:column;justify-content:space-between}.outdoor-preview-heading{flex-shrink:0}.outdoor-scene-caption{flex-shrink:0}}
-@media(max-width:1000px){.outdoor-demo{grid-template-columns:minmax(0,1fr) 262px}.outdoor-controls{padding:24px 18px}.outdoor-intro{gap:35px}.outdoor-preview{display:flex;flex-direction:column;justify-content:center}.outdoor-scene-caption{font-size:10px;margin:0 18px 20px}.outdoor-preview-heading{padding:20px 18px 0}.outdoor-preview-heading strong{font-size:15px}.outdoor-preview-heading>span{font-size:9px}}
-@media(max-width:760px){.outdoor-section{padding-block:45px}.outdoor-intro{grid-template-columns:1fr;gap:14px;margin-bottom:24px}.outdoor-intro h2{font-size:32px}.outdoor-intro p{font-size:14px}.outdoor-demo{grid-template-columns:1fr}.outdoor-preview-heading{padding:21px 20px 0}.outdoor-scene{margin-top:-7px}.outdoor-scene-caption{margin:-13px 20px 18px}.outdoor-controls{border-left:0;border-top:1px solid #d4e1df;padding:22px;display:grid;grid-template-columns:1fr 1fr;gap:0 25px}.outdoor-controls h3,.outdoor-instruction{display:none}.patio-finishes,.patio-review,.patio-note{grid-column:1/-1}.patio-finishes label{font-size:12px;min-height:65px}.patio-toggle small{display:none}.patio-toggle{font-size:12px;gap:8px;min-height:55px}.patio-finishes{margin-bottom:10px}.patio-brief{flex-direction:column;align-items:start;gap:17px;padding:22px}.outdoor-followup{align-items:start;flex-direction:column;gap:5px}.outdoor-followup a{white-space:normal}.home-local-note{margin-top:22px!important}}
-@media(max-width:380px){.outdoor-controls{padding:18px;gap:0 14px}.patio-toggle{grid-column:1/-1}.outdoor-scene-caption{font-size:9px;margin:-7px 14px 15px}.outdoor-preview-heading{padding-inline:14px}.outdoor-preview-heading strong{font-size:14px}.outdoor-intro h2{font-size:29px}.outdoor-live{gap:4px}}
+@media(min-width:1051px){
+.outdoor-preview-heading{position:absolute;inset:0 0 auto;z-index:3;color:#fff;padding:20px 24px 32px;background:linear-gradient(#0d283db3,transparent)}
+.outdoor-preview-heading>span{color:#fff}
+.outdoor-scene-caption{position:absolute;inset:auto 0 0;z-index:3;color:#fff;padding:32px 24px 16px;background:linear-gradient(transparent,#112a3ac9)}
+[data-evening=true] .outdoor-preview-heading,[data-evening=true] .outdoor-scene-caption,[data-evening=true] .outdoor-preview-heading>span{color:#fff}
+.outdoor-live i{background:#d3f3d9}
+}
+@media(max-width:1000px){.outdoor-demo{grid-template-columns:minmax(0,1fr) 248px}.outdoor-controls{padding:24px 18px}.outdoor-intro{gap:35px}.outdoor-scene-caption{font-size:10px;padding:14px 18px}.outdoor-preview-heading{padding:17px 18px}.outdoor-preview-heading strong{font-size:15px}.outdoor-preview-heading>span{font-size:9px}}
+@media(max-width:1050px){.outdoor-demo{grid-template-columns:1fr}.outdoor-controls{border-left:0;border-top:1px solid #d4e1df;padding:22px;display:grid;grid-template-columns:1fr 1fr;gap:0 25px}.outdoor-controls h3,.outdoor-instruction{display:none}.patio-finishes,.patio-review,.patio-note{grid-column:1/-1}.patio-finishes label{font-size:12px;min-height:65px}.patio-toggle small{display:none}.patio-toggle{font-size:12px;gap:8px;min-height:55px}.patio-finishes{margin-bottom:10px}.patio-swatch{background-size:650px auto}}
+@media(max-width:760px){.outdoor-section{padding-block:45px}.outdoor-intro{grid-template-columns:1fr;gap:14px;margin-bottom:24px}.outdoor-intro h2{font-size:32px}.outdoor-intro p{font-size:14px}.outdoor-preview-heading{padding:17px 20px}.outdoor-scene-caption{padding:14px 20px}.patio-brief{flex-direction:column;align-items:start;gap:17px;padding:22px}.outdoor-followup{align-items:start;flex-direction:column;gap:5px}.outdoor-followup a{white-space:normal}.home-local-note{margin-top:22px!important}}
+@media(max-width:380px){.outdoor-controls{padding:18px;gap:0 14px}.patio-toggle{grid-column:1/-1}.outdoor-scene-caption{font-size:9px;padding:12px 14px}.outdoor-preview-heading{padding-inline:14px}.outdoor-preview-heading strong{font-size:14px}.outdoor-intro h2{font-size:29px}.outdoor-live{gap:4px}}
 @media(prefers-reduced-motion:reduce){.outdoor-demo *,.outdoor-demo *::before{transition:none!important;animation:none!important}}
