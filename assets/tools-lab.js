@@ -85,6 +85,11 @@
   });
   $('.tools-tabs').hidden=false;
   restoreHash();window.addEventListener('hashchange',restoreHash);
+  // Initial native fragment scrolling can run after deferred scripts and font layout.
+  // Re-align once after load, unless the visitor has already begun exploring.
+  let visitorInteracted=false;
+  ['pointerdown','keydown','wheel','touchstart'].forEach(type=>window.addEventListener(type,()=>{visitorInteracted=true;},{once:true,passive:true}));
+  window.addEventListener('load',()=>requestAnimationFrame(()=>{if(!visitorInteracted)restoreHash();}),{once:true});
 
   const estimateForm=$('[data-estimate-form]'), estimateReview=$('[data-estimate-review]'), estimateRequest=$('#estimate-request');
   const checks={driveway:estimateForm.elements.driveway,house:estimateForm.elements.house,windows:estimateForm.elements.windows};
