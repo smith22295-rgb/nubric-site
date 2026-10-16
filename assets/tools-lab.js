@@ -1,209 +1,134 @@
 (() => {
   'use strict';
-  const root = document.querySelector('.tools-studio');
+  const dollars = (cents) => new Intl.NumberFormat('en-US', {style:'currency', currency:'USD', minimumFractionDigits:0, maximumFractionDigits:2}).format(cents / 100);
+  const homeSizes = {compact:{label:'up to 1,500 sq ft',cents:17900},standard:{label:'1,501–2,500 sq ft',cents:24900},large:{label:'2,501–3,500 sq ft',cents:32900}};
+  function calculateEstimate(input) {
+    const errors = {}, items = [];
+    const area = Number(input.area), count = Number(input.windowCount);
+    if (input.driveway === true) {
+      if (!Number.isInteger(area) || area < 100 || area > 3000) errors.area = 'Enter a driveway area from 100 to 3,000 whole square feet.';
+      else items.push({key:'driveway',label:`Driveway cleaning (${area.toLocaleString('en-US')} sq ft)`,cents:Math.max(15000,area * 22)});
+    }
+    if (input.house === true) {
+      if (!Object.hasOwn(homeSizes,input.homeSize)) errors.homeSize = 'Choose a home size.';
+      else items.push({key:'house',label:`House wash (${homeSizes[input.homeSize].label})`,cents:homeSizes[input.homeSize].cents});
+    }
+    if (input.windows === true) {
+      if (!Number.isInteger(count) || count < 1 || count > 40) errors.windowCount = 'Enter between 1 and 40 whole windows.';
+      else items.push({key:'windows',label:`Exterior windows (${count})`,cents:count * 800});
+    }
+    if (![input.driveway,input.house,input.windows].some(value => value === true)) errors.selection = 'Choose at least one service to build an estimate.';
+    if (Object.keys(errors).length) return {valid:false,errors,items:[],totalCents:null,summary:''};
+    const totalCents = items.reduce((total,item) => total + item.cents,0);
+    return {valid:true,errors,items,totalCents,summary:`Requested work: ${items.map(item => item.label.toLowerCase()).join('; ')}. Sample estimate: ${dollars(totalCents)}.`};
+  }
+  const option = (id,label) => ({id,label});
+  function startIntake() {
+    return {step:'start',route:null,details:{},complete:false,reply:'Away for the season or getting ready to come back? What can I help you plan?',choices:[option('watch','Home watch while I’m away'),option('pool','Pool care'),option('return','Getting ready to return'),option('person','I’d rather talk to someone')]};
+  }
+  function intakeSummary(state) {
+    const d=state.details;
+    if (!state.complete) return 'Try the conversation to see the inquiry take shape.';
+    if (state.route==='watch') return `Home watch for a ${d.Property.toLowerCase()}, with ${d.Visits.toLowerCase()}.${d.Extras ? ' Include pool care.' : ''}`;
+    if (state.route==='pool') return `${d.Schedule} pool care for ${d.Pool==='Screened pool' ? 'a screened' : 'an open-air'} pool.`;
+    if (state.route==='return') return `A pre-arrival home check. Arrival: ${d.Arrival.toLowerCase()}.${d.Extras ? ' Include a pool check.' : ''}`;
+    return 'The customer would like a personal conversation about property care.';
+  }
+  function advanceIntake(previous,action) {
+    if (!previous.choices.some(choice => choice.id===action)) return previous;
+    if (action==='restart') return startIntake();
+    if (action==='review') return previous;
+    const state={...previous,details:{...previous.details},choices:[],complete:false};
+    const finish=(reply) => {
+      state.complete=true;state.step='complete';state.reply=reply;
+      state.choices=[option('review','Review the inquiry'),option('restart','Start again')];
+      if (state.route==='watch' && state.details.Property==='Single-family home' && !state.details.Extras) state.choices.unshift(option('add-pool','Include pool care'));
+      return state;
+    };
+    if (action==='add-pool') {state.details.Extras='Pool care';return finish('Added pool care to your home-watch request.');}
+    if (previous.step==='start') {
+      state.route=action;
+      if (action==='watch') {state.details.Service='Home watch';state.step='watch-property';state.reply='Home-watch visits can include checks for visible issues and photo updates. What type of property needs looking after?';state.choices=[option('condo','Condo'),option('house','Single-family home')];}
+      if (action==='pool') {state.details.Service='Pool care';state.step='pool-type';state.reply='Let’s start with the pool setting. Is it screened or open to the air?';state.choices=[option('screened','Screened pool'),option('open','Open-air pool')];}
+      if (action==='return') {state.details.Service='Pre-arrival check';state.step='arrival';state.reply='Let’s plan a check before you get back. When are you returning?';state.choices=[option('soon','Within a week'),option('later','In the next month')];}
+      if (action==='person') {state.details.Service='Personal follow-up';return finish('Some questions are better handled by a person. A live assistant can pass your request to the team instead of making you repeat the conversation.');}
+      return state;
+    }
+    if (previous.step==='watch-property') {state.details.Property=action==='condo'?'Condo':'Single-family home';state.step='watch-frequency';state.reply='How often would you like a visit?';state.choices=[option('weekly','Weekly visits'),option('twice','Twice a month')];return state;}
+    if (previous.step==='watch-frequency') {state.details.Visits=action==='weekly'?'Weekly visits':'Twice-monthly visits';return finish('Your request is ready to review. The team can follow up about access, availability and pricing.');}
+    if (previous.step==='pool-type') {state.details.Pool=action==='screened'?'Screened pool':'Open-air pool';state.step='pool-schedule';state.reply='Will you need care throughout the year, or while you’re away?';state.choices=[option('year','Year-round care'),option('seasonal','While I’m away')];return state;}
+    if (previous.step==='pool-schedule') {state.details.Schedule=action==='year'?'Year-round':'Seasonal';return finish('Your pool setting and schedule are in the request. The team can follow up with the service details and a quote.');}
+    if (previous.step==='arrival') {state.details.Arrival=action==='soon'?'Within a week':'In the next month';state.step='return-scope';state.reply='Would you like the pool checked before you arrive, too?';state.choices=[option('home-only','Home check only'),option('with-pool','Home and pool check')];return state;}
+    if (previous.step==='return-scope') {if(action==='with-pool')state.details.Extras='Pool check';return finish('Your arrival window and requested checks are ready for the team. They can confirm availability and make the arrangements with you.');}
+    return previous;
+  }
+  // Pure rules are also exercised by local Node tests, without a browser or network.
+  if (typeof module !== 'undefined' && module.exports) {module.exports={calculateEstimate,startIntake,advanceIntake,intakeSummary};return;}
+  const root=document.querySelector('.tools-page');
   if (!root) return;
-  const $ = selector => root.querySelector(selector);
-  const $$ = selector => [...root.querySelectorAll(selector)];
-  const money = new Intl.NumberFormat('en-US', {style:'currency', currency:'USD'});
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const demos = $$('input[name="studio-demo"]');
-  const hashes = {product:'try-builder', assistant:'ai-examples', estimate:'calculators'};
-  const legacy = {'ordering-examples':'product','try-builder':'product','ai-examples':'assistant','calculators':'estimate','content-sites':'estimate'};
-  function switchDemo(value, focus = false) {
-    const input = demos.find(demo => demo.value === value);
-    if (!input) return;
-    input.checked = true;
-    try { history.replaceState(history.state, '', '#' + hashes[value]); } catch (_) { /* Native controls still work. */ }
-    if (focus) input.focus({preventScroll:true});
+  const $=selector=>root.querySelector(selector), $$=selector=>[...root.querySelectorAll(selector)];
+  const tabs=$$('[data-tool-tab]'), panels=$$('[data-tool-panel]');
+  const hashes={visual:'try-builder',estimate:'calculators',assistant:'ai-examples'};
+  function selectTool(key,{focus=false,writeHash=false}={}) {
+    if (!Object.hasOwn(hashes,key)) return;
+    tabs.forEach(tab=>{const active=tab.dataset.toolTab===key;tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1;if(active&&focus)tab.focus({preventScroll:true});});
+    panels.forEach(panel=>{panel.hidden=panel.dataset.toolPanel!==key;});
+    if(writeHash)try{history.replaceState(history.state,'','#'+hashes[key]);}catch{/* The controls work without history access. */}
   }
   function restoreHash() {
-    const value = legacy[location.hash.slice(1)];
-    if (value) demos.find(demo => demo.value === value).checked = true;
+    const key=Object.keys(hashes).find(key=>hashes[key]===location.hash.slice(1));
+    if(key){selectTool(key);$('#explore-tools').scrollIntoView({block:'start',behavior:'instant'});}
   }
-  restoreHash();
-  window.addEventListener('hashchange', restoreHash);
-  demos.forEach(demo => demo.addEventListener('change', () => switchDemo(demo.value)));
-  $$('form').forEach(form => form.addEventListener('submit', event => event.preventDefault()));
-  $$('button[disabled],input[disabled],select[disabled]').forEach(control => { control.disabled = false; });
-
-  const colors = {
-    ocean:{name:'Ocean blue', stops:['#163b52','#3e7f9c','#39758f','#14364d']},
-    forest:{name:'Forest green', stops:['#1b3b32','#528b70','#315d4e','#17382c']},
-    sand:{name:'Champagne', stops:['#887054','#d4b98d','#bc9b72','#8c7254']},
-    clay:{name:'Terracotta', stops:['#69382d','#c17b5b','#a3563e','#66392c']},
-    graphite:{name:'Graphite', stops:['#1c252e','#626f7b','#343e49','#17212a']}
-  };
-  let color = 'ocean';
-  let productState;
-  function updateProduct() {
-    const model = $('input[name="product-model"]:checked').value;
-    const quantity = Number($('#studio-quantity').value);
-    const text = $('#studio-engraving').value.trim() || 'Your brand';
-    const font = $('#studio-typeface').value;
-    const finish = colors[color];
-    const discount = quantity >= 250 ? .25 : quantity >= 100 ? .2 : quantity >= 50 ? .15 : quantity >= 25 ? .1 : quantity >= 10 ? .05 : 0;
-    const unitCents = Math.round((model === 'bottle' ? 2800 : 2500) * (1 - discount));
-    const totalCents = unitCents * quantity;
-    productState = {product:model === 'bottle' ? '24 oz bottle' : '20 oz tumbler', color:finish.name, text, lettering:font === 'modern' ? 'Modern' : 'Classic', quantity, unitCents, totalCents, discount};
-    $$('[data-product-model]').forEach(group => group.toggleAttribute('hidden', group.dataset.productModel !== model));
-    $$('[data-coat-stop]').forEach(stop => stop.setAttribute('stop-color', finish.stops[Number(stop.dataset.coatStop)]));
-    const engraving = $('[data-product-text]');
-    engraving.textContent = text;
-    engraving.setAttribute('font-family', font === 'modern' ? 'Manrope,Arial,sans-serif' : 'Georgia,serif');
-    engraving.setAttribute('font-size', String(Math.min(24, 155 / Math.max(text.length * .62, 1))));
-    $('[data-color-name]').textContent = finish.name;
-    $('[data-product-size]').textContent = productState.product;
-    $('[data-product-caption]').textContent = finish.name + ' / ' + productState.product;
-    $('#product-art-title').textContent = `Personalized ${finish.name.toLowerCase()} ${productState.product}, with ${text} engraving`;
-    $('[data-product-total]').textContent = money.format(totalCents / 100);
-    $('[data-product-unit]').textContent = money.format(unitCents / 100) + ' each';
-    $('[data-product-discount]').textContent = discount ? `${Math.round(discount * 100)}% quantity saving` : 'Engraving included';
-    $$('[data-product-color]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.productColor === color)));
-  }
-  $('[data-product-form]').addEventListener('input', updateProduct);
-  $('[data-product-form]').addEventListener('change', updateProduct);
-  $$('[data-product-color]').forEach(button => button.addEventListener('click', () => { color = button.dataset.productColor; updateProduct(); }));
-  $('[data-product-reset]').addEventListener('click', () => { $('[data-product-form]').reset(); color = 'ocean'; updateProduct(); });
-  updateProduct();
-
-  const dialog = $('#studio-order-dialog');
-  $('[data-product-review]').addEventListener('click', () => {
-    updateProduct();
-    const details = $('[data-order-details]');
-    details.replaceChildren();
-    const lines = [['Product', productState.product],['Finish', productState.color],['Design text', productState.text],['Lettering', productState.lettering],['Quantity', String(productState.quantity)],['Price per product', money.format(productState.unitCents / 100)],['Example order total', money.format(productState.totalCents / 100)]];
-    lines.forEach(([label, value]) => {
-      const row = document.createElement('div'), name = document.createElement('dt'), content = document.createElement('dd');
-      name.textContent = label; content.textContent = value; row.append(name, content); details.append(row);
-    });
-    dialog.showModal(); document.body.classList.add('studio-modal-open');
+  tabs.forEach((tab,index)=>{
+    tab.addEventListener('click',()=>selectTool(tab.dataset.toolTab,{writeHash:true}));
+    tab.addEventListener('keydown',event=>{const keys={ArrowRight:(index+1)%tabs.length,ArrowLeft:(index+tabs.length-1)%tabs.length,Home:0,End:tabs.length-1};if(Object.hasOwn(keys,event.key)){event.preventDefault();selectTool(tabs[keys[event.key]].dataset.toolTab,{focus:true,writeHash:true});}});
   });
-  $$('[data-order-close]').forEach(button => button.addEventListener('click', () => dialog.close()));
-  dialog.addEventListener('close', () => document.body.classList.remove('studio-modal-open'));
-  dialog.addEventListener('click', event => {
-    const box = dialog.getBoundingClientRect();
-    if (event.target === dialog && (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom)) dialog.close();
-  });
+  $('.tools-tabs').hidden=false;
+  restoreHash();window.addEventListener('hashchange',restoreHash);
 
-  const materials = {wood:{name:'Pressure-treated wood', price:450, color:'#c69e75', edge:'#866c54'},cedar:{name:'Cedar',price:625,color:'#b47954',edge:'#794c34'},composite:{name:'Composite',price:850,color:'#7c8990',edge:'#4e5e69'}};
-  const svgNS = 'http://www.w3.org/2000/svg';
-  const svgElement = (tag, attrs) => { const element = document.createElementNS(svgNS, tag); Object.entries(attrs).forEach(([name,value]) => element.setAttribute(name, String(value))); return element; };
-  function updateQuote() {
-    const length = Number($('#studio-length').value), width = Number($('#studio-width').value);
-    const material = materials[$('#studio-deck-material').value];
-    const rail = $('#studio-railing').checked;
-    const validLength = Number.isInteger(length) && length >= 8 && length <= 30;
-    const validWidth = Number.isInteger(width) && width >= 8 && width <= 24;
-    const valid = validLength && validWidth && Boolean(material);
-    $('#studio-length').setAttribute('aria-invalid', String(!validLength));
-    $('#studio-width').setAttribute('aria-invalid', String(!validWidth));
-    $('[data-quote-error]').hidden = valid;
-    $('[data-quote-error]').textContent = valid ? '' : 'Use whole feet: length 8–30 ft and width 8–24 ft.';
-    $('[data-deck-scene]').toggleAttribute('hidden', !valid);
-    $('[data-quote-rail-row]').hidden = !rail;
-    if (!valid) {
-      ['materials','labor','railing','total'].forEach(key => { $('[data-quote-' + key + ']').textContent = '—'; });
-      $('[data-deck-dimensions]').textContent = 'Enter dimensions to preview your project';
-      return;
-    }
-    const area = length * width, quantity = Math.ceil(area * 110 / 100);
-    const materialCents = quantity * material.price, laborCents = area * 600 + 12000;
-    const railCents = rail ? (length * 2 + width) * 1800 : 0;
-    $('[data-quote-materials]').textContent = money.format(materialCents / 100);
-    $('[data-quote-labor]').textContent = money.format(laborCents / 100);
-    $('[data-quote-railing]').textContent = money.format(railCents / 100);
-    $('[data-quote-total]').textContent = money.format((materialCents + laborCents + railCents) / 100);
-    $('[data-deck-caption]').textContent = material.name;
-    $('[data-deck-dimensions]').textContent = `${length} × ${width} ft / ${area} sq ft`;
-    $('#deck-art-title').textContent = `${length} by ${width} foot ${material.name.toLowerCase()} deck${rail ? ' with railing on three sides' : ''}`;
-    // Fit all permitted dimensions into the drawing without losing its proportions.
-    const scale = Math.min(360 / length, 220 / width);
-    const w = length * scale, h = width * scale, x = -w / 2, y = -h / 2;
-    const project = (px, py, z = 0) => [320 + .85 * px - .85 * py, 250 + .38 * px + .38 * py - z];
-    const points = values => values.map(point => project(...point).join(',')).join(' ');
-    const edge = $('[data-deck-edge]'); edge.replaceChildren();
-    const front = [[x,y+h],[x+w,y+h],[x+w,y]];
-    edge.append(svgElement('polygon',{points:points([...front,...front.slice().reverse().map(([px,py])=>[px,py,-12])]),fill:material.edge}));
-    const base = $('[data-deck-base]');
-    Object.entries({x,y,width:w,height:h,fill:material.color,stroke:material.edge}).forEach(([name,value]) => base.setAttribute(name,String(value)));
-    const planks = $('[data-deck-planks]'); planks.replaceChildren();
-    for (let offset = 13; offset < h; offset += 13) planks.append(svgElement('path',{d:`M${x} ${y+offset}h${w}`,fill:'none',stroke:material.edge,'stroke-width':1,'stroke-opacity':.5}));
-    const rails = $('[data-deck-rails]'); rails.replaceChildren();
-    if (rail) {
-      rails.append(svgElement('polyline',{points:points([[x,y+h,36],[x,y,36],[x+w,y,36],[x+w,y+h,36]]),fill:'none',stroke:material.edge,'stroke-width':5}));
-      const post = (px,py) => rails.append(svgElement('polyline',{points:points([[px,py],[px,py,36]]),fill:'none',stroke:material.edge,'stroke-width':3}));
-      for (let i = 0; i <= 8; i++) post(x + i*w/8,y);
-      for (const side of [x,x+w]) for (let i = 0; i <= 5; i++) post(side,y+i*h/5);
-    }
+  const estimateForm=$('[data-estimate-form]'), estimateReview=$('[data-estimate-review]'), estimateRequest=$('#estimate-request');
+  const checks={driveway:estimateForm.elements.driveway,house:estimateForm.elements.house,windows:estimateForm.elements.windows};
+  const fields={driveway:estimateForm.elements.area,house:estimateForm.elements.homeSize,windows:estimateForm.elements.windowCount};
+  function closeEstimate(){estimateRequest.hidden=true;estimateReview.setAttribute('aria-expanded','false');estimateReview.textContent='Review the sample request';}
+  function updateEstimate(){
+    Object.entries(checks).forEach(([key,checkbox])=>{fields[key].disabled=!checkbox.checked;$(`[data-estimate-field="${key}"]`).hidden=!checkbox.checked;const marker=$(`[data-estimate-marker="${key}"]`);marker.setAttribute('aria-pressed',String(checkbox.checked));marker.querySelector('span').textContent=checkbox.checked?'✓':'+';});
+    const result=calculateEstimate({driveway:checks.driveway.checked,house:checks.house.checked,windows:checks.windows.checked,area:fields.driveway.value,homeSize:fields.house.value,windowCount:fields.windows.value});
+    [['driveway','area'],['house','homeSize'],['windows','windowCount']].forEach(([key,error])=>fields[key].setAttribute('aria-invalid',String(Boolean(result.errors[error]))));
+    const error=$('[data-estimate-error]');error.hidden=result.valid;error.textContent=Object.values(result.errors).join(' ');
+    $('[data-estimate-total]').textContent=result.valid?dollars(result.totalCents):'—';
+    Object.keys(checks).forEach(key=>{const item=result.items.find(item=>item.key===key);$(`[data-line-price="${key}"]`).textContent=item?dollars(item.cents):'';});
+    estimateReview.disabled=!result.valid;$('[data-estimate-summary]').textContent=result.summary;
+    if(!result.valid)closeEstimate();
   }
-  $('[data-quote-form]').addEventListener('input', updateQuote);
-  $('[data-quote-form]').addEventListener('change', updateQuote);
-  $('[data-quote-reset]').addEventListener('click', () => { $('[data-quote-form]').reset(); updateQuote(); });
-  updateQuote();
+  estimateForm.addEventListener('submit',event=>event.preventDefault());
+  estimateForm.addEventListener('input',updateEstimate);estimateForm.addEventListener('change',updateEstimate);
+  $$('[data-estimate-marker]').forEach(marker=>marker.addEventListener('click',()=>{const control=checks[marker.dataset.estimateMarker];control.checked=!control.checked;updateEstimate();}));
+  $('[data-estimate-reset]').addEventListener('click',()=>{estimateForm.reset();closeEstimate();updateEstimate();});
+  estimateReview.addEventListener('click',()=>{const open=estimateRequest.hidden;estimateRequest.hidden=!open;estimateReview.setAttribute('aria-expanded',String(open));estimateReview.textContent=open?'Close the sample request':'Review the sample request';if(open)estimateRequest.scrollIntoView({block:'nearest',behavior:'instant'});});
+  $('.estimate-markers').hidden=false;updateEstimate();
 
-  const transcript = $('[data-chat-transcript]'), choices = $('[data-chat-choices]');
-  let chatTimer, chatVersion = 0;
-  function bubble(text, customer = false) {
-    const item = document.createElement('div'), paragraph = document.createElement('p');
-    item.className = 'chat-bubble ' + (customer ? 'customer-bubble' : 'assistant-bubble');
-    paragraph.textContent = text; item.append(paragraph); transcript.append(item); transcript.scrollTop = transcript.scrollHeight;
-    return item;
+  let intake=startIntake();
+  const transcript=$('[data-assistant-transcript]'), choices=$('[data-assistant-choices]');
+  function addBubble(text,customer=false){const bubble=document.createElement('div'),p=document.createElement('p');bubble.className='assistant-bubble'+(customer?' is-customer':'');p.textContent=text;bubble.append(p);transcript.append(bubble);transcript.scrollTop=transcript.scrollHeight;}
+  function renderIntake(focus=false){
+    choices.replaceChildren();intake.choices.forEach(choice=>{const button=document.createElement('button');button.type='button';button.dataset.intakeAction=choice.id;button.textContent=choice.label;choices.append(button);});
+    const details=$('[data-handoff-details]');details.replaceChildren();
+    const entries=Object.entries(intake.details);if(!entries.length)entries.push(['Service','Waiting for a choice']);
+    entries.forEach(([key,value])=>{const row=document.createElement('div'),name=document.createElement('dt'),content=document.createElement('dd');name.textContent=key;content.textContent=value;row.append(name,content);details.append(row);});
+    $('[data-handoff-heading]').textContent=intake.complete?'One clear request.':'Your request takes shape.';
+    $('[data-handoff-summary]').textContent=intakeSummary(intake);$('[data-handoff-ready]').hidden=!intake.complete;
+    if(focus)choices.firstElementChild?.focus({preventScroll:true});
   }
-  function setChoices(items, focus = false) {
-    choices.replaceChildren();
-    items.forEach(([label, action, href]) => {
-      const element = document.createElement(href ? 'a' : 'button');
-      element.textContent = label;
-      if (href) element.href = href;
-      else { element.type = 'button'; element.dataset.chatAction = action; }
-      choices.append(element);
-    });
-    if (focus && choices.firstElementChild) choices.firstElementChild.focus({preventScroll:true});
-  }
-  function restartChat(focus = false) {
-    clearTimeout(chatTimer); chatVersion++; transcript.replaceChildren();
-    bubble('Hi! What would you like help with?');
-    setChoices([['Help me choose a product','products'],['Help me price a project','estimate'],['I’d like to speak to someone','person']],focus);
-  }
-  function result(title, description) {
-    const card = document.createElement('div'), heading = document.createElement('h4'), paragraph = document.createElement('p');
-    card.className = 'chat-result'; heading.textContent = title; paragraph.textContent = description; card.append(heading,paragraph); transcript.append(card); transcript.scrollTop = transcript.scrollHeight;
-  }
-  const conversations = {
-    products:{reply:'Let’s find a useful fit. Are you choosing gifts for a team, or something for an outdoor event?', choices:[['Gifts for our team','team'],['An outdoor event','outdoor']]},
-    team:{reply:'A personalized bottle is a good starting point in this example. Do you want one shared design or individual names?',choices:[['One shared design','shared'],['Individual names','names']]},
-    outdoor:{reply:'In this example, an insulated bottle keeps the design simple and gives people something they can use again. Choose a finish and review the quantity pricing.',title:'Suggested starting point',description:'24 oz bottle · Forest green · Your event branding',choices:[['Try the recommended design','apply-product'],['Ask for a different option','person']]},
-    shared:{reply:'We can carry the same design across the order. The configurator shows the finish, engraving and quantity price before the customer reviews it.',title:'A clear order to work from',description:'50 bottles · One shared design · Quantity pricing applied',choices:[['Try the recommended design','apply-product'],['Explore another question','restart']]},
-    names:{reply:'A live tool can collect a list of names, pair each one with its product and prepare the details for production. For this walkthrough, try a shared design in the configurator.',title:'Personalization at scale',description:'Name lists · Individual previews · Structured production details',choices:[['Open the product studio','apply-product'],['Talk about bulk ordering',null,'/contact?service=custom&feature=Bulk%20personalization%20tool']]},
-    estimate:{reply:'An estimator can ask for the measurements and options that affect your price. Let’s try a deck project where materials, installation and railing update together.',title:'One request. A useful estimate.',description:'Measurements · Material choices · A visible price breakdown',choices:[['Try the visual estimator','apply-estimate'],['Explore another question','restart']]},
-    person:{reply:'For a request that needs personal attention, the assistant can hand the conversation to your team with the important details already gathered.',title:'Keep the conversation moving',description:'The customer’s question and choices can accompany the handoff.',choices:[['Talk to Nubric about an assistant',null,'/contact?service=custom&feature=Business%20assistant'],['Explore another question','restart']]}
-  };
-  choices.addEventListener('click', event => {
-    const button = event.target.closest('button[data-chat-action]');
-    if (!button || !choices.contains(button)) return;
-    const action = button.dataset.chatAction, keyboard = event.detail === 0;
-    if (action === 'restart') { restartChat(keyboard); return; }
-    if (action === 'apply-product') {
-      $('[data-product-form]').reset(); color = 'forest'; $('#studio-engraving').value = 'Summit Team'; $('#studio-quantity').value = '50'; updateProduct(); switchDemo('product',true); return;
-    }
-    if (action === 'apply-estimate') { switchDemo('estimate',true); return; }
-    const conversation = conversations[action];
-    if (!conversation) return;
-    bubble(button.textContent,true);
-    choices.replaceChildren();
-    const pending = document.createElement('div'); pending.className = 'chat-thinking'; pending.setAttribute('aria-label','Preparing the guided example');
-    for (let i = 0; i < 3; i++) pending.append(document.createElement('i'));
-    transcript.append(pending); transcript.scrollTop = transcript.scrollHeight;
-    const version = ++chatVersion;
-    const finish = () => {
-      if (version !== chatVersion) return;
-      pending.remove(); bubble(conversation.reply);
-      if (conversation.title) result(conversation.title,conversation.description);
-      setChoices(conversation.choices,keyboard);
-    };
-    if (reducedMotion.matches) finish(); else chatTimer = setTimeout(finish,550);
+  function restartIntake(focus=false){intake=startIntake();transcript.replaceChildren();addBubble(intake.reply);renderIntake(focus);}
+  choices.addEventListener('click',event=>{
+    const button=event.target.closest('button[data-intake-action]');if(!button||!choices.contains(button))return;
+    const action=button.dataset.intakeAction;if(!intake.choices.some(choice=>choice.id===action))return;
+    const keyboard=event.detail===0;
+    if(action==='restart'){restartIntake(keyboard);return;}
+    if(action==='review'){const handoff=$('[data-assistant-handoff]');handoff.focus({preventScroll:true});handoff.scrollIntoView({block:'nearest',behavior:'instant'});return;}
+    const next=advanceIntake(intake,action);if(next===intake)return;
+    addBubble(button.textContent,true);intake=next;addBubble(intake.reply);renderIntake(keyboard);
   });
-  $('[data-chat-reset]').addEventListener('click', event => restartChat(event.detail === 0));
-  window.addEventListener('pagehide', () => { clearTimeout(chatTimer); restartChat(); if (dialog.open) dialog.close(); });
-  restartChat();
+  $('[data-assistant-reset]').addEventListener('click',event=>restartIntake(event.detail===0));
+  restartIntake();
 })();
