@@ -1,5 +1,5 @@
 /* Nubric studio system: real work, open space, one unmistakable orange. */
-.nubric-v3{--ink:#142c40;--muted:#506477;--accent:#b63c00;--line:#cfdae3;--paper:#fff;--stage:#edf3f8;--orange:#ff7a21;--warm:#f3e6db;--pale:#fff0e5;color:var(--ink);background:#fff;font-family:'Public Sans',Arial,sans-serif;overflow-x:clip}
+.nubric-v3{--ink:#142c40;--muted:#506477;--accent:#b63c00;--line:#cfdae3;--paper:#fff;--stage:#edf3f8;--orange:#ff7a21;--warm:#e7a16d;--pale:#fff0e5;color:var(--ink);background:#fff;font-family:'Public Sans',Arial,sans-serif;overflow-x:clip}
 .nubric-v3 *{box-sizing:border-box}.nubric-v3 [hidden]{display:none!important}.nubric-v3 main{min-width:0}.nubric-v3 .wrap{width:min(1320px,calc(100% - 96px))}
 .nubric-v3 h1,.nubric-v3 h2,.nubric-v3 h3{font-family:Sora,Arial,sans-serif;font-weight:600;letter-spacing:-.055em;color:var(--ink)}
 .nubric-v3 h1{font-size:clamp(44px,5.7vw,82px);line-height:1.06}.nubric-v3 h2{font-size:clamp(30px,3.3vw,48px);line-height:1.12}.nubric-v3 h3{font-size:24px;line-height:1.25;letter-spacing:-.035em}
