@@ -98,3 +98,6 @@
 .nubric-v3 .flow-arrow:focus-visible,.nubric-v3 .flow-dot:focus-visible{outline-color:var(--ink)}
 .nubric-v3 .portfolio-fallback{padding-bottom:65px}
 @media(max-width:760px){.nubric-v3 .flow-caption{gap:18px;padding-top:24px}.nubric-v3 .flow-description{font-size:14px}.nubric-v3 .portfolio-player{margin-bottom:40px}}
+
+/* Keep consultation fields readable and avoid mobile focus zoom. */
+@media(max-width:760px){.nubric-v3 .brief-form input,.nubric-v3 .brief-form select,.nubric-v3 .brief-form textarea{font-size:16px}}
