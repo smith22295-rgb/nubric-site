@@ -19,7 +19,7 @@
   };
   window.addEventListener('hashchange',chooseHash);
   chooseHash();
-  const colors={coast:'#77c8e250',sunset:'#ffc88870',electric:'#bd9aff80'};
+  const colors={coast:'#77c8e250',sunset:'color-mix(in srgb,var(--orange) 44%,transparent)',electric:'#bd9aff80'};
   const light=document.getElementById('light-stage');
   const palettes=[...document.querySelectorAll('[data-light-palette]')];
   palettes.forEach(button=>{
