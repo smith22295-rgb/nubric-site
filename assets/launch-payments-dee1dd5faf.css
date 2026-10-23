@@ -1,0 +1,30 @@
+/* A launch package has two payees, one combined example total. */
+.nubric-v3 .launch-payments .section-heading{align-items:start;margin-bottom:30px}
+.nubric-v3 .launch-payments h2{max-width:20ch}
+.launch-example{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--paper)}
+.launch-example-label{max-width:none;margin:0;padding:20px 26px;border-bottom:1px solid var(--line);font-size:15px;font-weight:650;color:var(--ink);display:flex;justify-content:space-between;gap:12px 24px;flex-wrap:wrap}
+.launch-example-label span{font-size:13px;font-weight:400;color:var(--muted)}
+.launch-payees{display:grid;grid-template-columns:1fr 1fr}
+.launch-payee{padding:29px 30px;min-width:0}
+.nubric-v3 .launch-payee h3{font-size:21px;letter-spacing:-.035em;margin:0 0 15px}
+.launch-payee .launch-payee-amount{font:600 clamp(44px,4.8vw,62px)/1.12 Sora,Arial,sans-serif;letter-spacing:-.055em;margin:0 0 15px}
+.launch-payee>p:not(.launch-payee-amount){font-size:15px;max-width:40ch;margin-bottom:25px}
+.launch-payee-nubric{background:var(--section-navy);color:white}
+.nubric-v3 .launch-payee-nubric h3,.launch-payee-nubric .launch-payee-amount{color:white}
+.launch-payee-nubric>p:not(.launch-payee-amount){color:#d3e1eb}
+.launch-payee-providers .launch-payee-amount{color:var(--ink)}
+.launch-payee-providers{background:var(--stage);color:var(--ink)}
+.launch-payee dl{margin:0;padding:18px 0 0;border-top:1px solid #ffffff40}
+.launch-payee-providers dl{border-color:var(--line)}
+.launch-payee dl>div{display:flex;justify-content:space-between;gap:20px;font-size:13px;line-height:1.6;margin-top:10px}
+.launch-payee dt{font-weight:400}.launch-payee dd{font-weight:650;margin:0;white-space:nowrap}
+.launch-combined{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 30px;background:var(--pale);color:var(--ink)}
+.launch-combined>div>strong{display:block;font-size:17px}.launch-combined span{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+.launch-combined>strong{font:600 clamp(32px,4vw,43px)/1.2 Sora,Arial,sans-serif;letter-spacing:-.04em}
+.launch-payment-note{font-size:13px;color:var(--muted);max-width:88ch;margin:20px 0 0}
+.launch-split-details{margin:22px 0 0;padding:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:none;border-radius:0}
+.launch-split-details summary{padding:18px 0;font-size:14px;min-height:56px;cursor:pointer}
+.launch-split-details>p{padding:0 0 18px;margin:0;font-size:14px;max-width:84ch}
+.launch-renewal{display:flex;align-items:baseline;gap:30px;margin-top:27px}
+.nubric-v3 .launch-renewal h3{font-size:21px;margin:0;flex:none}.launch-renewal p{font-size:14px;margin:0;max-width:68ch}
+@media(max-width:760px){.launch-example-label{display:block;padding:18px 22px}.launch-example-label span{display:block;margin-top:5px}.launch-payees{grid-template-columns:1fr}.launch-payee{padding:25px 23px}.launch-payee>p:not(.launch-payee-amount){font-size:14px;max-width:none}.launch-payee dl>div{font-size:12px;gap:16px}.launch-combined{padding:22px;align-items:start}.launch-combined>div>strong{font-size:15px}.launch-combined span{font-size:12px;max-width:23ch}.launch-combined>strong{font-size:33px}.launch-renewal{display:block}.nubric-v3 .launch-renewal h3{margin-bottom:10px}.launch-payment-note{font-size:12px}}

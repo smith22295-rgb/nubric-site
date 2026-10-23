@@ -9,7 +9,7 @@
 .nubric-v3 .launch-payee h3{font-size:21px;letter-spacing:-.035em;margin:0 0 15px}
 .launch-payee .launch-payee-amount{font:600 clamp(44px,4.8vw,62px)/1.12 Sora,Arial,sans-serif;letter-spacing:-.055em;margin:0 0 15px}
 .launch-payee>p:not(.launch-payee-amount){font-size:15px;max-width:40ch;margin-bottom:25px}
-.launch-payee-nubric{background:var(--ink);color:white}
+.launch-payee-nubric{background:var(--section-navy);color:white}
 .nubric-v3 .launch-payee-nubric h3,.launch-payee-nubric .launch-payee-amount{color:white}
 .launch-payee-nubric>p:not(.launch-payee-amount){color:#d3e1eb}
 .launch-payee-providers .launch-payee-amount{color:var(--ink)}

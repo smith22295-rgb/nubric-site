@@ -21,7 +21,7 @@
 .home-refresh .n-hero-tabs button[aria-selected=true]:hover{background:var(--ink);color:white}
 .home-refresh .n-stage-note{font-size:13px;padding:15px 18px;transform:rotate(2deg);margin-top:3px}
 /* Blue service chapter; white surfaces keep the four choices easy to scan. */
-.nubric-v3.home-refresh .n-service-chapter{background:#1b2b3e;color:#dce9f3}
+.nubric-v3.home-refresh .n-service-chapter{background:var(--section-navy);color:#dce9f3}
 .nubric-v3.home-refresh .n-service-chapter .n-section-head h2{color:#fff}
 .home-refresh .n-service-chapter .n-section-head>p{color:#dce9f3}
 .home-refresh .n-service-chapter .n-offer{border-color:#ffffff38;color:var(--ink)}
