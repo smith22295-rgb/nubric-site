@@ -1,0 +1,4 @@
+interface:
+  display_name: "Nubric Web Design"
+  short_description: "Intentional website design and visual review"
+  default_prompt: "Use $nubric-web-design to design or refine this website using its brand brief and real content, then verify the desktop and mobile experience."
