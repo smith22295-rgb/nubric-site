@@ -15,6 +15,8 @@ Help a small-business owner understand the available services, see convincing re
 - Business Launch $699 and its existing two-payee breakdown. Do not silently change inclusions or recurring costs during design work.
 - App support, legal pages, consent-controlled analytics and the existing HTTPS inquiry form.
 
+Homepage sequence: introduce Nubric, show service choices and search essentials, then show selected projects and interactive tools. Keep the offer ahead of the Harmony-led project showcase.
+
 ## Visual direction: an open studio
 
 Real projects are the main visual material. Use an expansive, upright project presentation, restrained orange accents, clear typography, and navy service chapters. Avoid faux browser windows, stacked shadows and decorative containers around every section. Keep the outdoor visualizer as a practical interactive example with honest concept labeling.
