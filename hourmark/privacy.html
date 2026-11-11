@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" /><meta http-equiv="Content-Security-Policy" content="default-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; object-src &#x27;none&#x27;; script-src &#x27;self&#x27;; script-src-attr &#x27;none&#x27;; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; https://fonts.googleapis.com; font-src &#x27;self&#x27; https://fonts.gstatic.com; img-src &#x27;self&#x27; data:; connect-src &#x27;self&#x27;; frame-src &#x27;none&#x27;; worker-src &#x27;none&#x27;; media-src &#x27;none&#x27;; manifest-src &#x27;none&#x27;; form-action &#x27;none&#x27;; upgrade-insecure-requests"><meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Privacy Policy — Hour Mark by Nubric</title><meta name="description" content="Read the Hour Mark privacy policy from Nubric, including how app information is handled and how to contact support.">
+  <title>Privacy Policy — HourMark by Nubric</title><meta name="description" content="Read the HourMark privacy policy from Nubric, including local records, optional cloud sync, subscription services, and exports.">
   <link rel="canonical" href="https://nubric.dev/hourmark/privacy" />
   <link rel="icon" type="image/png" href="/logo-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -210,7 +210,7 @@
   <div class="page">
     <p class="page-label">HourMark</p>
     <h1>Privacy Policy</h1>
-    <p class="updated">Effective: April 9, 2026 &nbsp;&middot;&nbsp; Last updated: April 22, 2026</p>
+    <p class="updated">Effective: April 9, 2026 &nbsp;&middot;&nbsp; Last updated: November 11, 2026</p>
 
     <div class="highlight-box">
       <p>HourMark is built for 1099 contractors and the businesses that pay them. We take privacy seriously — your data stays yours. We do not sell your data, ever.</p>
@@ -227,20 +227,13 @@
       <p>When you sign in with Google or Apple, we receive your email address and display name from your authentication provider. This is used solely to create and secure your account.</p>
 
       <p><strong>Data You Enter</strong></p>
-      <p>HourMark stores contractor names, addresses, hourly rates, pay amounts, job names, and work entries that you enter into the app. This data is synced to Google Firebase so it is available across your devices.</p>
+      <p>HourMark stores contractor names, addresses, hourly rates, pay amounts, job names, and work entries that you enter into the app. If you sign in with Apple or Google, these records sync through Firebase. In local mode, these records remain on your iPhone unless you choose to export or share them.</p>
 
       <p><strong>Tax Identification Numbers (TINs/SSNs/EINs)</strong></p>
-      <p>TINs are stored <strong>only on your device</strong> using encrypted secure storage (iOS Keychain / Android Keystore). They are <strong>never uploaded to our servers or Firebase</strong>. TINs are masked in all exports and print views.</p>
+      <p>TINs are stored in encrypted on-device secure storage (iOS Keychain) and excluded from Firebase sync. They are masked in printed worksheets and omitted from CSV reports. The <strong>full JSON export includes unmasked tax IDs</strong>; the app warns you to store that file securely. If you share the file with a service or another person, that destination receives its contents. This export is a copy of your records; the app does not currently include an import workflow.</p>
 
       <p><strong>Analytics Data</strong></p>
-      <p>We collect anonymous usage data through Firebase Analytics to understand how the app is used and improve it. This includes:</p>
-      <ul>
-        <li>Which screens are viewed</li>
-        <li>Which features are used (e.g., logging entries, exporting reports)</li>
-        <li>App version and platform (iOS, Android, or web)</li>
-        <li>Device type and operating system version</li>
-      </ul>
-      <p>Analytics data does <strong>not</strong> include any personal information, contractor names, financial amounts, tax IDs, or any data you enter into the app.</p>
+      <p>The current iOS app does not send screen or feature events through Firebase Analytics. The RevenueCat subscription SDK receives installation/customer identifiers, app and platform information, purchase events, and subscription status to provide purchases, restores, entitlement checks, and subscription metrics. These services are used in local mode too; local mode refers to where your contractor and work records are stored.</p>
 
       <p><strong>Feedback</strong></p>
       <p>If you choose to submit feedback through the app, we collect:</p>
@@ -248,14 +241,14 @@
         <li>Your message (up to 500 characters)</li>
         <li>An optional star rating</li>
         <li>Your platform and app version</li>
-        <li>Your anonymous user ID</li>
+        <li>Your app user ID, which can be associated with your signed-in account</li>
       </ul>
 
       <p><strong>Subscription and Purchase Information</strong></p>
       <p>HourMark offers optional paid subscriptions ("HourMark Pro") through the Apple App Store. When you subscribe:</p>
       <ul>
         <li>Your payment is processed by <strong>Apple</strong>. We never see, receive, or store your credit card or payment details.</li>
-        <li>We use <strong>RevenueCat</strong> as our subscription management provider. RevenueCat receives the anonymous App Store transaction, your anonymous user ID, and subscription status (active / expired / trial) in order to unlock Pro features across your devices.</li>
+        <li>We use <strong>RevenueCat</strong> to validate subscription receipts, restore purchases, and maintain Pro access. Signed-in purchases use your app account identifier; local-mode purchases use a RevenueCat installation/customer identifier. Subscription records can be associated with your app account and are not necessarily anonymous.</li>
         <li>We do <strong>not</strong> receive your name, email, address, or payment method from the App Store purchase.</li>
         <li>RevenueCat's privacy practices are described at <a href="https://www.revenuecat.com/privacy" target="_blank">revenuecat.com/privacy</a>.</li>
       </ul>
@@ -263,18 +256,18 @@
       <h2>3. How We Use Your Information</h2>
       <ul>
         <li><strong>App functionality</strong> — To store and sync your contractor and pay tracking data</li>
-        <li><strong>Analytics</strong> — To understand feature usage and improve the app</li>
+        <li><strong>Subscriptions</strong> — To validate purchases, restore access, and understand subscription activity</li>
         <li><strong>Feedback</strong> — To respond to user suggestions and fix issues</li>
       </ul>
-      <p>We do <strong>not</strong> use your data for advertising, profiling, or marketing. We do <strong>not</strong> sell or share your data with third parties.</p>
+      <p>We do not sell your records or use them for advertising. The service providers listed below process the information needed to operate the app. Exports are shared only with destinations you select.</p>
 
       <h2>4. Tracking Disclosure</h2>
-      <p>We do <strong>not</strong> track you across other companies' apps or websites. We do not use Apple's advertising identifier (IDFA) or any cross-app tracking technologies. Our analytics are anonymous, aggregated, and used solely to improve the app.</p>
+      <p>We do not track you across other companies' apps or websites. We do not use Apple's advertising identifier (IDFA). Subscription services use the identifiers described above to maintain purchase access.</p>
 
       <h2>5. Third-Party Services</h2>
       <p>HourMark uses the following third-party services:</p>
       <ul>
-        <li><strong>Google Firebase</strong> — Authentication, Firestore database, and Analytics. See <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a>.</li>
+        <li><strong>Google Firebase</strong> — Optional authentication and Firestore sync, plus submitted feedback. Native Firebase Analytics events are not enabled. See <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a>.</li>
         <li><strong>Apple Sign-In</strong> (when available) — See <a href="https://www.apple.com/privacy/" target="_blank">Apple Privacy Policy</a>.</li>
         <li><strong>Apple App Store (In-App Purchases)</strong> — Processes HourMark Pro subscription payments. See <a href="https://www.apple.com/legal/privacy/" target="_blank">Apple Privacy Policy</a>.</li>
         <li><strong>RevenueCat</strong> — Manages subscription entitlements and syncs Pro status across devices. See <a href="https://www.revenuecat.com/privacy" target="_blank">RevenueCat Privacy Policy</a>.</li>
@@ -282,7 +275,7 @@
       <p>These services process data as described in their respective privacy policies.</p>
 
       <h2>6. Data Processing Location</h2>
-      <p>Your data is stored and processed on Google Firebase servers located in the United States. By using the app, you consent to the transfer and processing of your data in the United States.</p>
+      <p>Signed-in cloud records are stored in the configured U.S. Firestore region. Apple and RevenueCat may process billing and technical information in other locations as described in their policies. Local-mode contractor and work records are stored on your iPhone.</p>
 
       <h2>7. Data Security</h2>
       <ul>
