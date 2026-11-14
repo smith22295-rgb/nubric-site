@@ -95,7 +95,10 @@
     const field = name => document.getElementById('brief-' + name);
     const service = field('service');
     const preset = new URLSearchParams(window.location.search).get('service');
-    if ([...service.options].some(o => o.value === preset)) service.value = preset;
+    if ([...service.options].some(o => o.value === preset)) {
+      service.value = preset;
+      service.closest('details')?.setAttribute('open', '');
+    }
     const feature = new URLSearchParams(window.location.search).get('feature');
     const demoNames = ['Before-and-after slider','Interactive lighting and depth','Animated content reveal','Content website with advertising','Product builder','Cover-flow gallery','Outdoor-living visualizer','Service estimate tool'];
     const canPrefill = !field('notes').value.trim();

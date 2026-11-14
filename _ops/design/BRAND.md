@@ -15,7 +15,7 @@ Help a small-business owner understand the available services, see convincing re
 - Business Launch $699 and its existing two-payee breakdown. Do not silently change inclusions or recurring costs during design work.
 - App support, legal pages, consent-controlled analytics and the existing HTTPS inquiry form.
 
-Homepage sequence: introduce Nubric, show service choices and search essentials, then show selected projects and interactive tools. Keep the offer ahead of the Harmony-led project showcase.
+Homepage sequence: introduce Nubric with a compact day/evening demo, show three service paths and search essentials, then show selected projects, client feedback, the short process and a consultation. Business Launch is a bundle beneath the three core services. Keep the offer ahead of the Harmony-led project showcase. The complete interactive tools belong on their dedicated page.
 
 ## Visual direction: an open studio
 
@@ -23,7 +23,7 @@ Real projects are the main visual material. Use an expansive, upright project pr
 
 Palette roles: paper #ffffff; ink #142c40; section navy #1b2b3e; orange #f38432; supporting text #506477; surface #edf3f8. Use navy text on orange. On navy, use white headings and pale blue supporting text. Links must remain recognizable without color alone.
 
-Typography: Sora for display/headings, Public Sans for body and controls. Display tracking around -.045em, body normal. Main body 16–18px, supporting labels normally 13–14px, essential control text at least 14px. Avoid a blanket tiny-text treatment on mobile. Scale headings with clamp; allow natural line wrapping.
+Typography: locally hosted Bricolage Grotesque for display/headings, Public Sans for body and controls. Display tracking around -.04em, body normal. Main body 16–18px, supporting labels normally 13–14px, essential control text at least 14px. Avoid a blanket tiny-text treatment on mobile. Scale headings with clamp; allow natural line wrapping. Open font licenses live beside the font files.
 
 Layout: maximum shared width 1280px; desktop side gutters 48px, mobile 20px. Spacing based on 8px steps, with 64–96px major desktop sections and 40–56px on mobile. Page intros put the headline and a concise explanation side by side where space permits; service choices or work should enter the first screen.
 
@@ -33,7 +33,7 @@ Motion: no autoplay or forced scrolling. A short transition on project selection
 
 ## Source and release
 
-The shared studio stylesheet is the canonical visual system. Publish an immutable fingerprint and update references together. Keep old fingerprints for cached pages. Do not keep adding page-wide patch stylesheets to override the same components.
+The shared `assets/studio-design.css` stylesheet is the canonical visual system. `site.css` and feature styles provide the underlying component behavior. Publish an immutable fingerprint and update references together. Keep old fingerprints for cached pages. Do not keep adding page-wide patch stylesheets to override the same components. The homepage preview source is `assets/studio-scene.js`. Existing gallery, process and business-tool controllers remain in use.
 
 Before release, run `_ops/security/verify.py` and relevant interaction checks. Inspect homepage, services, a pricing page, portfolio, a project detail, custom tools, contact and mobile navigation. Check service prices and preservation of legal/form/analytics behavior. Save desktop/mobile proofs and report limitations honestly.
 
