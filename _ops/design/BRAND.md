@@ -9,7 +9,7 @@ Help a small-business owner understand the available services, see convincing re
 - Hero: “A website that feels like your business.”
 - Logo and its original colors.
 - Orange accent #f38432; dark section background #1b2b3e. Text navy #142c40.
-- The album-style flipbook portfolio, with touch, keyboard and visible controls.
+- The album-style flipbook portfolio, with mirrored reflections, soft ground lighting, depth and shadows, touch, keyboard and visible controls. Retain the reflective presentation when refining the rest of the site.
 - Approved family portrait and accurate, existing testimonials.
 - Website prices $299 / $499 / $699 and shops $699 / $999 / $1,699 / $2,499, until Adam changes them.
 - Business Launch $699 and its existing two-payee breakdown. Do not silently change inclusions or recurring costs during design work.

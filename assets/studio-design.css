@@ -216,9 +216,6 @@ a:hover { color:var(--ink); text-decoration-thickness:2px; }
 
 /* A generous portfolio, with the existing album interaction intact. */
 .portfolio-player.is-coverflow { padding:10px 0 38px; }
-.is-coverflow .flow-stage { border-radius:16px;background:var(--stage); }
-.is-coverflow .portfolio-image { box-shadow:0 15px 35px #142c4020; }
-.is-coverflow .portfolio-image::after { display:none; }
 .flow-caption { margin-top:18px; }
 .flow-title { font-family:var(--display); }
 .flow-price { display:none; }
