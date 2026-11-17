@@ -15,7 +15,7 @@ Help a small-business owner understand the available services, see convincing re
 - Business Launch $699 and its existing two-payee breakdown. Do not silently change inclusions or recurring costs during design work.
 - App support, legal pages, consent-controlled analytics and the existing HTTPS inquiry form.
 
-Homepage sequence: introduce Nubric with a compact day/evening demo, show three service paths and search essentials, then show selected projects, client feedback, the short process and a consultation. Business Launch is a bundle beneath the three core services. Keep the offer ahead of the Harmony-led project showcase. The complete interactive tools belong on their dedicated page.
+Homepage sequence: lead with the website offer, starting price and consultation. Show three service paths and search essentials immediately afterward, then selected projects, client feedback and the short process. The optional custom-tool showcase belongs lower down and demonstrates useful choices becoming an inquiry. Business Launch is a bundle beneath the three core services. Keep the offer ahead of the Harmony-led project showcase. More interactive tools live on their dedicated page.
 
 ## Visual direction: an open studio
 
@@ -33,7 +33,7 @@ Motion: no autoplay or forced scrolling. A short transition on project selection
 
 ## Source and release
 
-The shared `assets/studio-design.css` stylesheet is the canonical visual system. `site.css` and feature styles provide the underlying component behavior. Publish an immutable fingerprint and update references together. Keep old fingerprints for cached pages. Do not keep adding page-wide patch stylesheets to override the same components. The homepage preview source is `assets/studio-scene.js`. Existing gallery, process and business-tool controllers remain in use.
+The shared `assets/studio-design.css` stylesheet is the canonical visual system. `site.css` and feature styles provide the underlying component behavior. Publish an immutable fingerprint and update references together. Keep old fingerprints for cached pages. Do not keep adding page-wide patch stylesheets to override the same components. The homepage planner shares the existing `assets/outdoor-demo.js` controller with Custom Tools & AI. Existing gallery, process and business-tool controllers remain in use.
 
 Before release, run `_ops/security/verify.py` and relevant interaction checks. Inspect homepage, services, a pricing page, portfolio, a project detail, custom tools, contact and mobile navigation. Check service prices and preservation of legal/form/analytics behavior. Save desktop/mobile proofs and report limitations honestly.
 

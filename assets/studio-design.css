@@ -72,20 +72,12 @@ a:hover { color:var(--ink); text-decoration-thickness:2px; }
 .consult-actions .button svg { width:18px;height:18px; }
 
 /* The homepage introduces three jobs, followed by evidence and a conversation. */
-.studio-intro { padding-block:44px 48px; display:grid; grid-template-columns:1.15fr 1fr;gap:60px;align-items:center; }
-.studio-intro h1 { font-size:clamp(46px,5.6vw,81px);max-width:12.5ch;margin:0 0 23px; }
+.studio-intro { padding-block:40px 44px; display:grid; grid-template-columns:1.35fr 1fr;gap:70px;align-items:end; }
+.studio-intro h1 { font-size:clamp(46px,5.4vw,78px);max-width:16ch;margin:0; }
 .studio-intro p { font-size:18px;line-height:1.65;max-width:42ch; }
 .studio-intro .studio-place { font-size:14px;margin-bottom:23px; }
 .studio-intro .actions { margin-top:24px;gap:22px; }
-.studio-intro .studio-from { font-size:14px;margin-top:16px; }
-.studio-scene { margin:0;background:var(--stage);border-radius:16px;overflow:hidden;min-width:0; }
-.scene-photo { position:relative;overflow:hidden; }
-.scene-photo img { width:100%;height:480px;object-fit:cover;object-position:48% 50%; }
-.scene-modes { position:absolute;bottom:18px;left:18px;display:flex;gap:5px;background:white;padding:5px;border-radius:30px; }
-.scene-modes button { border:0;border-radius:24px;background:white;color:var(--ink);padding:9px 18px;min-height:44px;font-size:14px; }
-.scene-modes button[aria-pressed=true] { background:var(--section-navy);color:white; }
-.studio-scene figcaption { padding:16px 20px;display:flex;justify-content:space-between;gap:14px;align-items:center; }
-.studio-scene figcaption span { color:var(--muted);font-size:13px; }
+.studio-intro .studio-from { font-size:15px;margin-top:14px; }
 .studio-offer { background:var(--section-navy);color:white;padding-block:45px; }
 .studio-offer h2,.studio-offer h3,.studio-offer strong { color:white; }
 .studio-offer .offer-head { display:flex;align-items:baseline;justify-content:space-between;gap:24px;margin-bottom:28px; }
@@ -125,6 +117,57 @@ a:hover { color:var(--ink); text-decoration-thickness:2px; }
 .studio-steps ol { padding-left:22px;font-size:16px;line-height:1.65;margin-bottom:15px; }
 .studio-apps { border-top:1px solid var(--line);padding-block:20px;display:flex;justify-content:space-between;align-items:center;gap:20px; }
 .studio-apps p { font-size:16px;margin:0;color:var(--ink); }
+
+/* A business tool becomes relevant after the services and real project examples. */
+.home-tool-showcase {
+  padding-block: 38px 44px;
+  border-top: 1px solid var(--line);
+}
+.home-tool-heading {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: end;
+  gap: 60px;
+  margin-bottom: 25px;
+}
+.home-tool-heading h2 { margin: 0; }
+.home-tool-heading > p { font-size: 16px; margin: 0; max-width: 48ch; }
+.home-tool-showcase .outdoor-demo { grid-template-columns: minmax(0, 1fr) 300px; }
+.home-tool-showcase .outdoor-preview-heading strong { font-family: var(--display); font-size: 20px; }
+.home-tool-showcase .outdoor-controls h3 { font-size: 25px; }
+.home-tool-showcase .outdoor-instruction { font-size: 15px; margin-bottom: 20px; }
+.home-tool-showcase .patio-finishes legend { font-size: 15px; }
+.home-tool-showcase .patio-finishes label { font-size: 14px; }
+.home-tool-showcase .patio-toggle { font-size: 15px; }
+.home-tool-showcase .patio-toggle small { font-size: 13px; }
+.home-tool-showcase .outdoor-controls .patio-review { font-size: 15px; min-height: 48px; }
+.home-tool-showcase .patio-note { font-size: 13px; line-height: 1.5; }
+.home-tool-showcase .patio-finishes label:has(input:checked) {
+  border-color: #b74707;
+  box-shadow: 0 0 0 1px #b74707;
+  color: var(--ink);
+}
+.home-tool-showcase .patio-brief { background: var(--stage); }
+.home-tool-showcase .patio-brief-label { font-size: 14px; color: var(--ink); }
+.home-tool-showcase .patio-brief p { font-size: 17px; }
+.home-tool-showcase .patio-brief-note { font-size: 14px; }
+.home-tool-showcase .patio-brief .button { font-size: 15px; background: var(--orange); border-color: var(--orange); color: var(--ink); }
+.home-tool-followup { display: flex; justify-content: space-between; align-items: center; gap: 30px; margin-top: 16px; }
+.home-tool-followup p { font-size: 15px; margin: 0; max-width: 53ch; }
+@media (max-width: 1050px) {
+  .home-tool-showcase .outdoor-demo { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .home-tool-showcase { padding-block: 30px; }
+  .home-tool-heading { grid-template-columns: 1fr; gap: 14px; margin-bottom: 22px; }
+  .home-tool-heading h2 { font-size: 31px; }
+  .home-tool-heading > p { font-size: 16px; }
+  .home-tool-showcase .outdoor-scene { aspect-ratio: 3 / 2; }
+  .home-tool-showcase .outdoor-controls { gap: 0 18px; }
+  .home-tool-showcase .patio-toggle { font-size: 14px; }
+  .home-tool-showcase .patio-brief p { font-size: 16px; }
+  .home-tool-followup { align-items: start; flex-direction: column; gap: 6px; }
+}
 
 /* Service directory. Each service has one home and one primary route. */
 .service-directory { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;padding-bottom:40px; }
@@ -280,7 +323,6 @@ a:hover { color:var(--ink); text-decoration-thickness:2px; }
  .wrap { width:calc(100% - 60px); }
  .desktop-nav { gap:20px; }
  .studio-intro { gap:30px; }
- .scene-photo img { height:400px; }
  .offer-list { gap:24px; }
  .offer-item+.offer-item { padding-left:24px; }
  .studio-trust { gap:40px; }
@@ -305,10 +347,6 @@ a:hover { color:var(--ink); text-decoration-thickness:2px; }
  .package h2 { font-size:27px; }
  .package-grid { gap:14px; }
  .studio-intro h1 { font-size:clamp(44px,6.5vw,64px); }
- .scene-photo img { height:390px; }
- .scene-modes { bottom:12px;left:12px; }
- .studio-scene figcaption { padding:12px;flex-wrap:wrap;gap:0; }
- .studio-scene figcaption span { display:none; }
  .offer-item h3 { font-size:24px; }
  .studio-proof-grid { gap:20px; }
  .proof-copy h3 { font-size:23px; }
@@ -325,15 +363,12 @@ a:hover { color:var(--ink); text-decoration-thickness:2px; }
  .brand { font-size:26px; }
  .brand img { width:36px;height:36px; }
  .mobile-menu nav { top:71px;max-height:calc(100dvh - 82px); }
- .studio-intro { grid-template-columns:1fr;padding-block:30px;gap:26px; }
- .studio-intro h1 { font-size:clamp(43px,11vw,62px);max-width:14ch;margin-bottom:18px; }
+ .studio-intro { grid-template-columns:1fr;padding-block:28px 32px;gap:16px; }
+ .studio-intro h1 { font-size:clamp(42px,10.5vw,60px);max-width:15ch;margin:0; }
  .studio-intro p { font-size:16px; }
- .studio-intro .studio-place { margin-bottom:16px;font-size:13px; }
+ .studio-intro .studio-place { margin-bottom:12px;font-size:13px; }
  .studio-intro .actions { margin-top:19px;gap:10px 20px; }
  .studio-intro .studio-from { font-size:14px;margin-top:9px; }
- .scene-photo img { height:215px;object-position:50% 50%; }
- .studio-scene { border-radius:9px; }
- .studio-scene figcaption { padding:8px 15px; }
  .studio-offer { padding-block:30px; }
  .studio-offer .offer-head { align-items:center;gap:12px;margin-bottom:22px; }
  .offer-head h2 { font-size:29px;max-width:13ch; }
